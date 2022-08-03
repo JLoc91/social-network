@@ -1,3 +1,21 @@
 body {
     background-color: ghostwhite;
 }
+
+form#registration input,
+form#registration label {
+    display: block;
+}
+
+img {
+    width: 35vw;
+}
+
+img.loggedIn {
+    width: 18vw;
+}
+
+.error {
+    color: red;
+    font-weight: bolder;
+}
