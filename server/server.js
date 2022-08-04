@@ -29,14 +29,14 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.get("/user/id.json", function (req, res) {
-    console.log("req.session.userId in user/id.json: ", req.session.userId);
+    console.log("req.session.userid in user/id.json: ", req.session.userid);
     res.json({
-        userId: req.session.userId,
+        userid: req.session.userid,
     });
 });
 
 app.post("/register", (req, res) => {
-    console.log("post received");
+    console.log("register post received");
     console.log("req.body: ", req.body);
     if (
         req.body.first == "" ||
@@ -57,10 +57,47 @@ app.post("/register", (req, res) => {
             const id = response.rows[0].id;
             req.session.userId = id;
             res.json({
-                userId: req.session.userId,
+                userid: req.session.userid,
             });
         })
         .catch((err) => console.log("err in insertUser: ", err));
+});
+
+app.post("/login", (req, res) => {
+    if (req.session.userid) {
+        res.redirect("/petition");
+    } else {
+        console.log("register post received");
+        console.log("req.body: ", req.body);
+        if (req.body.email === "" || req.body.password === "") {
+            console.log("!!!ALL FIELDS MUST BE FILLED!!!");
+            res.render("/", {
+                error: true,
+            });
+        } else {
+            db.authenticate(req.body.email, req.body.password)
+                .then((resultObj) => {
+                    // if (authentication) {
+                    console.log("resultObj: ", resultObj);
+                    if (resultObj.passwordCheck) {
+                        req.session.userid = resultObj.userid;
+                        req.session.profile = true;
+                        console.log("yay it worked");
+                        res.json({
+                            userid: req.session.userid,
+                        });
+                        // } else {
+                    } else {
+                        console.log("not authenticated correctly");
+                        res.redirect("/login");
+                    }
+                })
+                .catch((err) => {
+                    console.log("err in authenticate: ", err);
+                    res.redirect("/login");
+                });
+        }
+    }
 });
 
 app.get("*", function (req, res) {

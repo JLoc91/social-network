@@ -12,7 +12,8 @@ import Login from "./components/Login";
 fetch("/user/id.json")
     .then((response) => response.json())
     .then((data) => {
-        if (!data.userId) {
+        console.log("data.user: ", data.user);
+        if (!data.userid) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
             ReactDOM.render(

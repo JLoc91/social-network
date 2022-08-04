@@ -60,3 +60,38 @@ function capitalizeParameter(par) {
     console.log("fullPar: ", fullPar);
     return fullPar;
 }
+
+module.exports.authenticate = (email, password) => {
+    return findUser(email)
+        .then((result) => {
+            console.log("result.rows in findUser: ", result.rows[0].password);
+            console.log("password in findUser: ", password);
+            console.log("result.rows[0].id in findUser: ", result.rows[0].id);
+            let userid = result.rows[0].id;
+            const resultObj = {
+                enteredPassword: password,
+                dbPassword: result.rows[0].password,
+                userid: result.rows[0].id,
+            };
+
+            return comparePassword(password, result.rows[0].password)
+                .then((passwordCheck) => {
+                    console.log("passwordCheck: ", passwordCheck);
+                    resultObj.passwordCheck = passwordCheck;
+                    console.log("resultObj in comparePassword: ", resultObj);
+                    return resultObj;
+                })
+                .catch((err) => console.log("err in comparePassword: ", err));
+        })
+        .catch((err) => console.log("error in findUser: ", err));
+};
+
+function findUser(email) {
+    console.log("email in findUser: ", email);
+    return db.query(`select * from ${tableUser}
+    where "email" = '${email}'`);
+}
+
+function comparePassword(password, dbPassword) {
+    return bcrypt.compare(password, dbPassword);
+}

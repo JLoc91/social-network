@@ -56,12 +56,8 @@ class Registration extends Component {
                 console.log("id at client from server: ", id);
                 location.reload();
             })
-            .catch((err) => console.log("err in fetch: ", err));
+            .catch((err) => console.log("err in registration fetch: ", err));
     }
-
-    // validateFields() {
-    //     if()
-    // }
 
     render() {
         return (

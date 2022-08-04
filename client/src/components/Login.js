@@ -34,17 +34,14 @@ class Login extends Component {
     onFormSubmit(e) {
         e.preventDefault();
         console.log("try to submit login form");
-        // if (!this.validateFields()) {
-        //     return;
-        // }
         const userData = {
             first: this.state.first,
             last: this.state.last,
             email: this.state.email,
             password: this.state.password,
         };
-        console.log("userData in Registration: ", userData);
-        fetch("/register", {
+        console.log("userData in Login: ", userData);
+        fetch("/login", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +49,11 @@ class Login extends Component {
             body: JSON.stringify(userData),
         })
             .then((response) => response.json())
-            .then((data) => {});
+            .then((data) => {
+                console.log("data at client from server: ", data);
+                location.href = "/";
+            })
+            .catch((err) => console.log("err in login fetch: ", err));
     }
 
     render() {
