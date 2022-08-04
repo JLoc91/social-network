@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
-class Registration extends Component {
+class Login extends Component {
     constructor() {
         super();
         this.state = {
@@ -33,7 +33,7 @@ class Registration extends Component {
 
     onFormSubmit(e) {
         e.preventDefault();
-        console.log("try to submit registration form");
+        console.log("try to submit login form");
         // if (!this.validateFields()) {
         //     return;
         // }
@@ -52,41 +52,15 @@ class Registration extends Component {
             body: JSON.stringify(userData),
         })
             .then((response) => response.json())
-            .then((id) => {
-                console.log("id at client from server: ", id);
-                location.reload();
-            })
-            .catch((err) => console.log("err in fetch: ", err));
+            .then((data) => {});
     }
-
-    // validateFields() {
-    //     if()
-    // }
 
     render() {
         return (
             <>
-                <span>Register Here!</span>
+                <span>Login Here!</span>
 
-                <form id="registration" onSubmit={this.onFormSubmit}>
-                    <br></br>
-                    <label htmlFor="first">First Name: </label>
-                    <input
-                        type="text"
-                        name="first"
-                        value={this.state.first}
-                        onChange={this.onFormInputChange}
-                    ></input>
-                    <br></br>
-                    <label htmlFor="last">Last Name: </label>
-                    <input
-                        type="text"
-                        name="last"
-                        value={this.state.last}
-                        onChange={this.onFormInputChange}
-                        // className={this.state.errors.last ? "error"}
-                    ></input>
-                    <br></br>
+                <form id="login" onSubmit={this.onFormSubmit}>
                     <label htmlFor="email">Email: </label>
                     <input
                         type="email"
@@ -104,19 +78,19 @@ class Registration extends Component {
                     ></input>
                     <br></br>
                     <button type="submit" onClick={this.onFormSubmit}>
-                        Register
+                        Login
                     </button>
                     <br></br>
                 </form>
 
                 <br></br>
                 <span>
-                    Already a Member?
-                    <Link to="/login">Click here to Log in!</Link>
+                    Not registered yet?
+                    <Link to="/">Click here to Register!</Link>
                 </span>
             </>
         );
     }
 }
 
-export default Registration;
+export default Login;

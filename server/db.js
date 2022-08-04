@@ -28,14 +28,8 @@ function hashPassword(password) {
 }
 
 module.exports.insertUser = (first, last, email, password) => {
-    //1. Hash the user's password [PROMISE]
-    //2. Insert into the database with a query
-    //3. Return the entire row --> not necessary???
-    // so that we can store the user's id in the session!
-
     return hashPassword(password)
         .then((hash) => {
-            // console.log("hash: ", hash);
             first = capitalizeParameter(first);
             last = capitalizeParameter(last);
             return db.query(
@@ -45,7 +39,6 @@ module.exports.insertUser = (first, last, email, password) => {
             );
         })
         .catch((err) => {
-            // console.log("err.message: ", err.message);
             if (
                 err.message ===
                 'duplicate key value violates unique constraint "users_email_key"'

@@ -16,9 +16,12 @@ app.use(
         sameSite: true,
     })
 );
-// Use middleware to help us read req.body, for submitted forms!
+
+app.use(cookieParser());
+
+// Enable easy parsing of HTTP forms sent in a request
 app.use(express.urlencoded({ extended: false }));
-// Use middleware to help us read req.body, for json?????!
+// Enable us to unpack JSON in the request body!
 app.use(express.json());
 
 app.use(compression());
@@ -26,6 +29,7 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.get("/user/id.json", function (req, res) {
+    console.log("req.session.userId in user/id.json: ", req.session.userId);
     res.json({
         userId: req.session.userId,
     });
@@ -48,7 +52,15 @@ app.post("/register", (req, res) => {
         req.body.last,
         req.body.email,
         req.body.password
-    );
+    )
+        .then((response) => {
+            const id = response.rows[0].id;
+            req.session.userId = id;
+            res.json({
+                userId: req.session.userId,
+            });
+        })
+        .catch((err) => console.log("err in insertUser: ", err));
 });
 
 app.get("*", function (req, res) {

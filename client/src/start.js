@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
 import Welcome from "./components/Welcome";
+import Login from "./components/Login";
 
 // ReactDOM.render(<Welcome />, document.querySelector("main"));
 
@@ -23,7 +24,7 @@ fetch("/user/id.json")
                 document.querySelector("main")
             );
         }
-    })
-    .catch(() => {
-        ReactDOM.render(<Welcome />, document.querySelector("main"));
     });
+// .catch(() => {
+//     ReactDOM.render(<Welcome />, document.querySelector("main"));
+// });
