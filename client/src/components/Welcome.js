@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Registration from "./Registration";
 import Login from "./Login";
+import ResetPassword from "./ResetPassword";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 class Welcome extends Component {
@@ -17,6 +18,9 @@ class Welcome extends Component {
                         </Route>
                         <Route exact path="/login">
                             <Login />
+                        </Route>
+                        <Route exact path="/reset-password">
+                            <ResetPassword />
                         </Route>
                     </div>
                 </BrowserRouter>

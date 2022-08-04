@@ -64,24 +64,41 @@ function capitalizeParameter(par) {
 module.exports.authenticate = (email, password) => {
     return findUser(email)
         .then((result) => {
-            console.log("result.rows in findUser: ", result.rows[0].password);
-            console.log("password in findUser: ", password);
-            console.log("result.rows[0].id in findUser: ", result.rows[0].id);
-            let userid = result.rows[0].id;
-            const resultObj = {
-                enteredPassword: password,
-                dbPassword: result.rows[0].password,
-                userid: result.rows[0].id,
-            };
+            console.log("result.rows[0]: ", result.rows[0]);
+            if (!result.rows[0]) {
+                console.log("kein user gefunden");
+                return [];
+            } else {
+                console.log(
+                    "result.rows in findUser: ",
+                    result.rows[0].password
+                );
+                console.log("password in findUser: ", password);
+                console.log(
+                    "result.rows[0].id in findUser: ",
+                    result.rows[0].id
+                );
+                let userid = result.rows[0].id;
+                const resultObj = {
+                    enteredPassword: password,
+                    dbPassword: result.rows[0].password,
+                    userid: result.rows[0].id,
+                };
 
-            return comparePassword(password, result.rows[0].password)
-                .then((passwordCheck) => {
-                    console.log("passwordCheck: ", passwordCheck);
-                    resultObj.passwordCheck = passwordCheck;
-                    console.log("resultObj in comparePassword: ", resultObj);
-                    return resultObj;
-                })
-                .catch((err) => console.log("err in comparePassword: ", err));
+                return comparePassword(password, result.rows[0].password)
+                    .then((passwordCheck) => {
+                        console.log("passwordCheck: ", passwordCheck);
+                        resultObj.passwordCheck = passwordCheck;
+                        console.log(
+                            "resultObj in comparePassword: ",
+                            resultObj
+                        );
+                        return resultObj;
+                    })
+                    .catch((err) =>
+                        console.log("err in comparePassword: ", err)
+                    );
+            }
         })
         .catch((err) => console.log("error in findUser: ", err));
 };
@@ -93,5 +110,7 @@ function findUser(email) {
 }
 
 function comparePassword(password, dbPassword) {
+    console.log("password: ", password);
+    console.log("dbPassword: ", dbPassword);
     return bcrypt.compare(password, dbPassword);
 }

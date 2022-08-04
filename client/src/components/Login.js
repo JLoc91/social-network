@@ -50,10 +50,23 @@ class Login extends Component {
         })
             .then((response) => response.json())
             .then((data) => {
+                // if (data.error) {
+                //     console.log("data.error: ", data.error);
+                // }
+
                 console.log("data at client from server: ", data);
-                location.href = "/";
+                if (!data.userid) {
+                    console.log("stay at /login");
+                    throw console.error("Credentials not correct");
+                } else {
+                    console.log("move to / ");
+                    location.href = "/";
+                }
             })
-            .catch((err) => console.log("err in login fetch: ", err));
+            .catch((err) => {
+                console.log("err in login fetch: ", err);
+                location.href = "/login";
+            });
     }
 
     render() {

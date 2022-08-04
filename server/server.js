@@ -5,6 +5,8 @@ const path = require("path");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const db = require("./db");
+const cryptoRandomString = require("crypto-random-string");
+const { sendEmail } = require("./ses.js");
 
 const COOKIE_SECRET =
     process.env.COOKIE_SECRET || require("./secrets.json").COOKIE_SECRET;
@@ -16,6 +18,10 @@ app.use(
         sameSite: true,
     })
 );
+
+const secretCode = cryptoRandomString({
+    length: 6,
+});
 
 app.use(cookieParser());
 
@@ -30,6 +36,8 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.get("/user/id.json", function (req, res) {
     console.log("req.session.userid in user/id.json: ", req.session.userid);
+    // sendEmail(1);
+
     res.json({
         userid: req.session.userid,
     });
@@ -44,8 +52,10 @@ app.post("/register", (req, res) => {
         req.body.email == "" ||
         req.body.password == ""
     ) {
-        res.redirect("/");
-        return;
+        console.log("!!!ALL FIELDS MUST BE FILLED!!!");
+        // res.redirect("/");
+        // return;
+        res.json({});
     }
     db.insertUser(
         req.body.first,
@@ -63,21 +73,25 @@ app.post("/register", (req, res) => {
         .catch((err) => console.log("err in insertUser: ", err));
 });
 
-app.post("/login", (req, res) => {
-    if (req.session.userid) {
-        res.redirect("/petition");
-    } else {
-        console.log("register post received");
+app.post(
+    "/login",
+    (req, res) => {
+        // if (req.session.userid) {
+        //     res.redirect("/");
+        // } else {
+        console.log("login post received");
         console.log("req.body: ", req.body);
         if (req.body.email === "" || req.body.password === "") {
             console.log("!!!ALL FIELDS MUST BE FILLED!!!");
-            res.render("/", {
-                error: true,
-            });
+            // res.render("/", {
+            //     error: true,
+            // });
+            // res.json({ error: true });
+            res.json({});
         } else {
+            console.log("req.body before authenticate: ", req.body);
             db.authenticate(req.body.email, req.body.password)
                 .then((resultObj) => {
-                    // if (authentication) {
                     console.log("resultObj: ", resultObj);
                     if (resultObj.passwordCheck) {
                         req.session.userid = resultObj.userid;
@@ -86,10 +100,9 @@ app.post("/login", (req, res) => {
                         res.json({
                             userid: req.session.userid,
                         });
-                        // } else {
                     } else {
                         console.log("not authenticated correctly");
-                        res.redirect("/login");
+                        res.json({});
                     }
                 })
                 .catch((err) => {
@@ -98,6 +111,16 @@ app.post("/login", (req, res) => {
                 });
         }
     }
+    // }
+);
+
+app.post("/sendCode", (req, res) => {
+    // send the email if the user is registered
+    const tempCode = secretCode();
+});
+
+app.post("/resetPassword", (req, res) => {
+    // check code and email, and UPDATE the password
 });
 
 app.get("*", function (req, res) {
