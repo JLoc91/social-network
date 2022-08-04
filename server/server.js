@@ -19,10 +19,6 @@ app.use(
     })
 );
 
-const secretCode = cryptoRandomString({
-    length: 6,
-});
-
 app.use(cookieParser());
 
 // Enable easy parsing of HTTP forms sent in a request
@@ -114,13 +110,30 @@ app.post(
     // }
 );
 
-app.post("/sendCode", (req, res) => {
-    // send the email if the user is registered
-    const tempCode = secretCode();
+app.post("/reset-password", (req, res) => {
+    // check code and email, and UPDATE the password
+    console.log("req.body in reset-password: ", req.body);
+
+    return;
 });
 
-app.post("/resetPassword", (req, res) => {
-    // check code and email, and UPDATE the password
+app.post("/sendCode", (req, res) => {
+    // send the email if the user is registered
+
+    console.log("req.body in sendCode: ", req.body);
+    db.checkEmail(req.body.email)
+        .then((result) => {
+            console.log("email Rückgabe: ", result.rows[0]);
+            const secretCode = cryptoRandomString({
+                length: 6,
+            });
+
+            db.insertCode(result.rows[0].email, secretCode).then((result) => {
+                sendEmail(result.rows[0].email);
+                res.json(result.rows[0]);
+            });
+        })
+        .catch((err) => console.log("err in checkEmail: ", err));
 });
 
 app.get("*", function (req, res) {

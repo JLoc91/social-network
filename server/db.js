@@ -1,5 +1,6 @@
 const spicedPg = require("spiced-pg");
 const tableUser = "users";
+const tableCode = "reset_codes";
 const bcrypt = require("bcryptjs");
 // const { profile } = require("console");
 let dbURL;
@@ -114,3 +115,16 @@ function comparePassword(password, dbPassword) {
     console.log("dbPassword: ", dbPassword);
     return bcrypt.compare(password, dbPassword);
 }
+
+module.exports.checkEmail = (email) => {
+    console.log("email: ", email);
+    return db.query(`select * from users where email='${email}'`);
+};
+
+module.exports.insertCode = (email, code) => {
+    return db.query(
+        `insert into ${tableCode} (email, code)
+    values ($1, $2)`,
+        [email, code]
+    );
+};
