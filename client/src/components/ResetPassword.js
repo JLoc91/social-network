@@ -7,7 +7,8 @@ class ResetPassword extends Component {
             view: 1,
         };
         this.onFormInputChange = this.onFormInputChange.bind(this);
-        this.onFormSubmit = this.onFormSubmit.bind(this);
+        this.onCodeFormSubmit = this.onCodeFormSubmit.bind(this);
+        this.onResetFormSubmit = this.onResetFormSubmit.bind(this);
         this.startResetPassword = this.startResetPassword.bind(this);
         this.currentView = this.currentView.bind(this);
     }
@@ -22,14 +23,14 @@ class ResetPassword extends Component {
         console.log("[target.name]: ", [target.name]);
     }
 
-    onFormSubmit(e) {
+    onCodeFormSubmit(e) {
         e.preventDefault();
-        console.log("try to submit reset form");
+        console.log("try to submit sendcode form");
         const userData = {
             email: this.state.email,
             code: this.state.code,
         };
-        console.log("userData in Reset: ", userData);
+        console.log("userData in sendcode: ", userData);
         fetch("/sendCode", {
             method: "post",
             headers: {
@@ -41,7 +42,42 @@ class ResetPassword extends Component {
             .then((data) => {
                 this.startResetPassword();
                 console.log("this.state.view: ", this.state.view);
+                console.log("this.state.email: ", this.state.email);
+                console.log("this.state.code: ", this.state.code);
+                console.log("userData.code: ", userData.code);
+                console.log("data.code: ", data.code);
+                // this.setState({this.state.code: data.code});
                 console.log("data at client from server: ", data);
+            })
+            .catch((err) => {
+                console.log("err in reset fetch: ", err);
+                location.href = "/sendCode";
+            });
+    }
+    onResetFormSubmit(e) {
+        e.preventDefault();
+        console.log("try to submit reset form");
+        const userData = {
+            email: this.state.email,
+            code: this.state.code,
+            newPassword: this.state.newPassword,
+        };
+        console.log("userData in Reset: ", userData);
+        fetch("/reset-password", {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("this.state.view: ", this.state.view);
+                console.log("this.state.email: ", this.state.email);
+                console.log("this.state.code: ", this.state.code);
+                console.log("userData.code: ", userData.code);
+                console.log("data.code: ", data.code);
+
                 // if (!data.userid) {
                 //     console.log("stay at /reset-password");
                 //     throw console.error("Credentials not correct");
@@ -64,10 +100,12 @@ class ResetPassword extends Component {
         console.log("this.state.view: ", this.state.view);
         if (this.state.view === 1) {
             //first view
+            // console.log("this.state.code in 1st view: ", this.state.code);
+
             return (
                 <>
                     <h2>Reset your password</h2>
-                    <form id="reset" onSubmit={this.onFormSubmit}>
+                    <form id="reset" onSubmit={this.onCodeFormSubmit}>
                         <label htmlFor="email">Email: </label>
                         <input
                             type="email"
@@ -82,15 +120,25 @@ class ResetPassword extends Component {
             );
         } else if (this.state.view === 2) {
             //Second view
+            // console.log("this.state.code in 2nd view: ", userData.code);
             return (
                 <>
                     <h2>Reset your password</h2>
-                    <form id="reset" onSubmit={this.onFormSubmit}>
+                    <form id="enterCode" onSubmit={this.onResetFormSubmit}>
                         <label htmlFor="code">Code: </label>
                         <input
-                            type="number"
+                            type="text"
                             name="code"
                             value={this.state.code}
+                            onChange={this.onFormInputChange}
+                        ></input>
+                        <p></p>
+
+                        <label htmlFor="newPassword">New Password: </label>
+                        <input
+                            type="password"
+                            name="newPassword"
+                            value={this.state.newPassword}
                             onChange={this.onFormInputChange}
                         ></input>
                         <p></p>

@@ -13,7 +13,7 @@ const ses = new aws.SES({
     region: "eu-west-1", // Make sure this corresponds to the region in which you have verified your email address (or 'eu-west-1' if you are using the Spiced credentials)
 });
 
-exports.sendEmail = function (code) {
+exports.sendEmail = function (email, code) {
     return ses
         .sendEmail({
             Source: "JLoco <rainbow.goldfish@spicedling.email>",

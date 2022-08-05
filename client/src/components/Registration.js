@@ -9,6 +9,7 @@ class Registration extends Component {
             last: "",
             email: "",
             password: "",
+            code: "",
             isUserLoggedIn: false,
             // error: {
             //     first: false,

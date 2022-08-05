@@ -113,6 +113,25 @@ app.post(
 app.post("/reset-password", (req, res) => {
     // check code and email, and UPDATE the password
     console.log("req.body in reset-password: ", req.body);
+    //check if code and email are same
+    db.getCodesFromDb(req.body.email)
+        .then((data) => {
+            console.log("data in checkCode: ", data.rows);
+            for (let i = 0; i < data.rows.length; i++) {
+                console.log("data.rows[i]: ", data.rows[i]);
+                if (req.body.code === data.rows[i].code) {
+                    console.log("code is correct");
+                    db.changePassword(
+                        req.body.newPassword,
+                        req.body.email
+                    ).then((data) => {
+                        console.log("password successfully changed ");
+                        console.log("data: ", data);
+                    });
+                }
+            }
+        })
+        .catch((err) => console.log("error in getCodesFromDb: ", err));
 
     return;
 });
@@ -123,13 +142,13 @@ app.post("/sendCode", (req, res) => {
     console.log("req.body in sendCode: ", req.body);
     db.checkEmail(req.body.email)
         .then((result) => {
-            console.log("email Rückgabe: ", result.rows[0]);
+            console.log("email Rückgabe: ", result.rows[0].email);
             const secretCode = cryptoRandomString({
                 length: 6,
             });
 
             db.insertCode(result.rows[0].email, secretCode).then((result) => {
-                sendEmail(result.rows[0].email);
+                sendEmail(result.rows[0].email, secretCode);
                 res.json(result.rows[0]);
             });
         })

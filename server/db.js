@@ -124,7 +124,28 @@ module.exports.checkEmail = (email) => {
 module.exports.insertCode = (email, code) => {
     return db.query(
         `insert into ${tableCode} (email, code)
-    values ($1, $2)`,
+    values ($1, $2) returning *`,
         [email, code]
     );
+};
+
+module.exports.getCodesFromDb = (email) => {
+    return db.query(
+        `        SELECT * FROM ${tableCode}
+WHERE CURRENT_TIMESTAMP - timestamp < INTERVAL '10 minutes'
+and email='${email}'`
+    );
+};
+
+module.exports.changePassword = (newPassword, email) => {
+    return hashPassword(newPassword)
+        .then((hash) => {
+            newPassword = hash;
+            return db.query(
+                `update ${tableCode} set password$1
+                WHERE email='$2'`,
+                [newPassword, email]
+            );
+        })
+        .catch((err) => console.log("err in hashPassword: ", err));
 };
