@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 class ResetPassword extends Component {
     constructor() {
@@ -72,6 +73,7 @@ class ResetPassword extends Component {
         })
             .then((response) => response.json())
             .then((data) => {
+                this.endResetPassword();
                 console.log("this.state.view: ", this.state.view);
                 console.log("this.state.email: ", this.state.email);
                 console.log("this.state.code: ", this.state.code);
@@ -94,6 +96,10 @@ class ResetPassword extends Component {
 
     startResetPassword() {
         this.setState({ view: 2 });
+    }
+
+    endResetPassword() {
+        this.setState({ view: 3 });
     }
 
     currentView() {
@@ -148,6 +154,14 @@ class ResetPassword extends Component {
             );
         } else if (this.state.view === 3) {
             // third view
+            return (
+                <>
+                    <h2>Password successfully changed!</h2>
+                    <span>
+                        <Link to="/login">Click here to Log in!</Link>
+                    </span>
+                </>
+            );
         }
     }
 

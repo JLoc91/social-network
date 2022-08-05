@@ -106,7 +106,7 @@ class Registration extends Component {
                     <br></br>
                 </form>
 
-                <br></br>
+                <p></p>
                 <span>
                     Already a Member?
                     <Link to="/login">Click here to Log in!</Link>

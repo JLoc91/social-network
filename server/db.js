@@ -140,11 +140,14 @@ and email='${email}'`
 module.exports.changePassword = (newPassword, email) => {
     return hashPassword(newPassword)
         .then((hash) => {
+            console.log("hash: ", hash);
+            console.log("newPassword: ", newPassword);
+            console.log("email: ", email);
             newPassword = hash;
+            // use other approach with values
             return db.query(
-                `update ${tableCode} set password$1
-                WHERE email='$2'`,
-                [newPassword, email]
+                `update ${tableUser} set password='${newPassword}'
+                WHERE email='${email}' `
             );
         })
         .catch((err) => console.log("err in hashPassword: ", err));

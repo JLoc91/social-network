@@ -61,7 +61,7 @@ app.post("/register", (req, res) => {
     )
         .then((response) => {
             const id = response.rows[0].id;
-            req.session.userId = id;
+            req.session.userid = id;
             res.json({
                 userid: req.session.userid,
             });
@@ -91,7 +91,7 @@ app.post(
                     console.log("resultObj: ", resultObj);
                     if (resultObj.passwordCheck) {
                         req.session.userid = resultObj.userid;
-                        req.session.profile = true;
+
                         console.log("yay it worked");
                         res.json({
                             userid: req.session.userid,
@@ -127,6 +127,7 @@ app.post("/reset-password", (req, res) => {
                     ).then((data) => {
                         console.log("password successfully changed ");
                         console.log("data: ", data);
+                        res.json({});
                     });
                 }
             }
