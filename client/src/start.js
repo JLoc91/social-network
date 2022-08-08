@@ -1,13 +1,6 @@
 import ReactDOM from "react-dom";
 import Welcome from "./components/Welcome";
-import Login from "./components/Login";
-
-// ReactDOM.render(<Welcome />, document.querySelector("main"));
-
-// function HelloWorld() {
-//     return <div>{Welcome}</div>;
-//     // return <div>Hello, World!</div>;
-// }
+import App from "./components/App";
 
 fetch("/user/id.json")
     .then((response) => response.json())
@@ -16,14 +9,7 @@ fetch("/user/id.json")
         if (!data.userid) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
-            ReactDOM.render(
-                <img
-                    className="loggedIn"
-                    src="https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                    alt="logo"
-                ></img>,
-                document.querySelector("main")
-            );
+            ReactDOM.render(<App />, document.querySelector("main"));
         }
     });
 // .catch(() => {

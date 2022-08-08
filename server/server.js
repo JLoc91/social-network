@@ -4,6 +4,8 @@ const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
+const s3 = require("./s3.js");
+const { uploader } = require("./middleware.js");
 const db = require("./db");
 const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses.js");
@@ -32,7 +34,6 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.get("/user/id.json", function (req, res) {
     console.log("req.session.userid in user/id.json: ", req.session.userid);
-    // sendEmail(1);
 
     res.json({
         userid: req.session.userid,
@@ -154,6 +155,44 @@ app.post("/sendCode", (req, res) => {
             });
         })
         .catch((err) => console.log("err in checkEmail: ", err));
+});
+
+//from imageboard
+app.post("/image", uploader.single("photo"), s3.upload, (req, res) => {
+    //grab the image that was sent [multer]
+    //save it somewhere [multer]
+    //respond to the client - success/failure
+
+    //req.file is created by MUlter if the upload worked!
+    req.body.awsurl = path.join(
+        "https://s3.amazonaws.com/spicedling/",
+        req.file.filename
+    );
+    console.log("req.session.userid in app.post: ", req.session.userid);
+    console.log("req.body in app.post : ", req.body);
+    console.log("req.file in app.post : ", req.file);
+    if (req.file) {
+        // console.log("req.file: ", req.file);
+        db.insertImage(req.body.awsurl, req.session.userid)
+            .then((result) => {
+                console.log("result: ", result);
+                req.session.first = result.rows[0].first;
+                req.session.last = result.rows[0].last;
+            })
+            .then(() => {
+                res.json({
+                    success: true,
+                    message: "File uploaded. Good job! 🚀",
+                    file: `/${req.file.filename}`,
+                });
+            })
+            .catch((err) => console.log("err in insertImage: ", err));
+    } else {
+        res.json({
+            success: false,
+            message: "File upload failed. 😥",
+        });
+    }
 });
 
 app.get("*", function (req, res) {

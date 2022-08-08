@@ -27,18 +27,26 @@ export default class App extends Component {
         this.setState({ isPopupOpen: !this.state.isPopupOpen });
     }
 
+    // imgFromApp() {
+    //     return d;
+    // }
+
     render() {
         return (
-            <div>
+            <div className="profileHeader">
                 <Logo />
                 <ProfilePic
                     togglePopup={this.togglePopup}
                     changeName={this.changeName}
+                    imgFromApp={this.imgFromApp}
                 />
                 {this.state.isPopupOpen && (
-                    <Uploader username={this.state.username} />
+                    <Uploader
+                        username={this.state.username}
+                        togglePopup={this.togglePopup}
+                    />
                 )}
-                <h1>Hello from App</h1>
+                {/* <h1>Hello from App</h1> */}
             </div>
         );
     }

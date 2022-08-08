@@ -10,7 +10,25 @@ export default class Uploader extends Component {
     }
 
     render() {
-        return <div>Hi {this.props.username} !!!</div>;
-        // Here you will need to create a form to send a image file, just like in the Image Board
+        return (
+            <div id="transparentCover">
+                <div id="popUp" className="imagebox shadow">
+                    <h3 id="closeButton" onClick={this.props.togglePopup}>
+                        CLOSE
+                    </h3>
+                    {/* <form action="/image" method="post"> */}
+                    <form
+                        action="/image"
+                        method="post"
+                        encType="multipart/form-data"
+                    >
+                        <div className="form-row shadow">
+                            <input type="file" name="photo" id="photo"></input>
+                            <input type="submit" name="Upload!"></input>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        );
     }
 }

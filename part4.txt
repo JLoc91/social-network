@@ -1,0 +1,32 @@
+1. App
+
+    Main container component for the entire logged-in user experience
+    It is the keeper of information about the logged-in/newly registered user. It fetches this information when it mounts and keeps the user info in its state.
+    Responsible for rendering the Logo, ProfilePic, and Uploader component
+    Passes functions to ProfilePic and Uploader for making changes to its state
+    MUST be a class since it needs both state and lifecycle methods
+
+2. ProfilePic
+
+    This component can be either a function (😄) or a class (🥲)
+    its job is to display a profile pic
+    You need to use the first and last name of the user as the value of the alt attribute
+    It's passed down the following values from app: first name, last name, and image url.
+    It is also passed down a functino that must be called when the image is cliced.
+    When the user clicks on the image, the uploader needs to become visible.
+
+3. Uploader
+
+    needs to be a class based component as it will need state --> DONE!
+    we need to conditionally render the uploader. --> DONE!
+        It starts off as hidden but when you click on the profilePic, you will make it visible.--> DONE!
+        The conditional rendering of the uplaoder depends on the current state.--> DONE!
+    Make it look like a modal with css. --> DONE!
+    When visible, it needs to render a file input to make image upload possible. --> DONE!
+        handle the change event on the file input and upload the selected file at that time
+        when the upload is done, you should know the url of the uploaded file and you MUST pass the url to a function in App (this function was passed to the uploader as a prop!)
+        for image upload, refer to what you did in IB. (formData, multer, S3, etc)...
+    The function we pass the url to HAS TO UPDATE the sate in app when there is a new image.
+    Maybe uploader has a button or x for closing. This too must call a funciton that as passed down as a prop to make the uploader disappear.
+    You'll need to add a new column to your user's table - call it imageUrl and make it TEXT.
+    Make sure that you do an UPDATE for the image in the user's table rather than an insert. (you'll need the userId and the imageUrl)

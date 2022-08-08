@@ -152,3 +152,10 @@ module.exports.changePassword = (newPassword, email) => {
         })
         .catch((err) => console.log("err in hashPassword: ", err));
 };
+
+module.exports.insertImage = (url, id) => {
+    return db.query(
+        `update ${tableUser} set url='${url}'
+        WHERE id=${id} returning *`
+    );
+};
