@@ -8,19 +8,27 @@ export default class App extends Component {
         super(props);
         this.state = {
             isPopupOpen: false,
-            username: "Buckwheat",
+            url: "",
+            first: "",
+            last: "",
         };
         this.togglePopup = this.togglePopup.bind(this);
-        this.changeName = this.changeName.bind(this);
+        this.changeUrl = this.changeUrl.bind(this);
     }
 
     componentDidMount() {
         console.log("Component Mounted");
-        // fetch informartion from the server
+        fetch("/userData")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("data: ", data);
+                this.changeUrl(data.url, data.first, data.last);
+                // fetch informartion from the server
+            });
     }
 
-    changeName(newName) {
-        this.setState({ username: newName });
+    changeUrl(newUrl, newFirst, newLast) {
+        this.setState({ url: newUrl, first: newFirst, last: newLast });
     }
 
     togglePopup() {
@@ -37,13 +45,15 @@ export default class App extends Component {
                 <Logo />
                 <ProfilePic
                     togglePopup={this.togglePopup}
-                    changeName={this.changeName}
-                    imgFromApp={this.imgFromApp}
+                    url={this.state.url}
+                    first={this.state.first}
+                    last={this.state.last}
                 />
                 {this.state.isPopupOpen && (
                     <Uploader
-                        username={this.state.username}
+                        url={this.state.url}
                         togglePopup={this.togglePopup}
+                        changeUrl={this.changeUrl}
                     />
                 )}
                 {/* <h1>Hello from App</h1> */}

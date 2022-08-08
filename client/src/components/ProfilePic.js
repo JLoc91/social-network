@@ -1,24 +1,29 @@
 import React from "react";
 
-export default function ProfilePic({ togglePopup, imgFromApp, changeName }) {
+export default function ProfilePic({ togglePopup, url, first, last }) {
     // console.log("PROPS in profilePic: ", props);
+    console.log("url before: ", url);
+    console.log("first: ", first);
+    console.log("last: ", last);
 
-    imgFromApp =
-        imgFromApp ||
+    url =
+        url ||
         "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png";
+
+    console.log("url after: ", url);
+    const altText = first + last;
+    console.log("altText: ", altText);
 
     return (
         <>
             <div className="profilePicContainer">
                 <img
                     id="profilePic"
-                    src={imgFromApp}
-                    alt="logo"
+                    src={url}
+                    alt={altText}
+                    // alt={altText}
                     onClick={togglePopup}
                 ></img>
-                <button onClick={() => changeName("Spiced")}>
-                    Change Name
-                </button>
             </div>
         </>
     );

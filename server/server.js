@@ -40,6 +40,17 @@ app.get("/user/id.json", function (req, res) {
     });
 });
 
+app.get("/userData", (req, res) => {
+    console.log("get all user data");
+    req.session.userid;
+    db.getEverything(req.session.userid)
+        .then((result) => {
+            console.log("result.rows[0]: ", result.rows[0]);
+            res.json(result.rows[0]);
+        })
+        .catch((err) => console.log("err in getEverything: ", err));
+});
+
 app.post("/register", (req, res) => {
     console.log("register post received");
     console.log("req.body: ", req.body);
@@ -162,15 +173,15 @@ app.post("/image", uploader.single("photo"), s3.upload, (req, res) => {
     //grab the image that was sent [multer]
     //save it somewhere [multer]
     //respond to the client - success/failure
+    console.log("req.session.userid in app.post: ", req.session.userid);
+    console.log("req.file in app.post : ", req.file);
+    console.log("req.body in app.post : ", req.body);
 
     //req.file is created by MUlter if the upload worked!
     req.body.awsurl = path.join(
         "https://s3.amazonaws.com/spicedling/",
         req.file.filename
     );
-    console.log("req.session.userid in app.post: ", req.session.userid);
-    console.log("req.body in app.post : ", req.body);
-    console.log("req.file in app.post : ", req.file);
     if (req.file) {
         // console.log("req.file: ", req.file);
         db.insertImage(req.body.awsurl, req.session.userid)
@@ -178,13 +189,18 @@ app.post("/image", uploader.single("photo"), s3.upload, (req, res) => {
                 console.log("result: ", result);
                 req.session.first = result.rows[0].first;
                 req.session.last = result.rows[0].last;
+                req.session.url = result.rows[0].url;
             })
             .then(() => {
                 res.json({
                     success: true,
                     message: "File uploaded. Good job! 🚀",
                     file: `/${req.file.filename}`,
+                    url: req.session.url,
+                    first: req.session.first,
+                    last: req.session.last,
                 });
+                // res.json({});
             })
             .catch((err) => console.log("err in insertImage: ", err));
     } else {
