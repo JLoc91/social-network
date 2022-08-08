@@ -1,0 +1,35 @@
+Client - you’re creating 2 new components!
+
+1 - Profile - child of App
+    can be a function component :smile: or a class :pensive:
+    gets passed a lot of info frmo App & is in charge of rendering:
+        the user’s first and last name
+        the ProfilePic component (but larger)
+        and BioEditor!
+
+
+2 - BioEditor - child of Profile (grandchild of App)
+
+    Needs to use state to control the textarea visibility so it needs to be a class
+    Keeps draftBio (whatever the user types in the textarea) in its own state - you’ll need a change handler to capture that value
+    Determines which of the 3 UIs to display based on teh bio prop that it gets passed down
+        a: If user doesn’t have a bio (prop we get from App -> Profile is undefined), then we want to render a clickable element that says ‘Add Bio’ AND make sure the textarea isn’t visible.
+        b: If user has a bio, render the bio with a clickable element that says ‘Edit Bio’
+        c: Text area is displayed - to toggle the textarea, store a property (e.g. showTextArea) in the BioEditor’s state
+            when showTextArea is false, hide it!
+            when showTextArea is true, show it!
+            clicking on either ‘Add Bio’ or ‘Edit Bio’ should set showTextArea to true.
+    Updating the bio when the user submits a new bio
+        Define a method called setBio that takes the officialBio as an argument and stores that official one in the state of App (e.g. officialBio or simply bio)
+        You need to pass down setBio from App to BioEditor! (App => Profile => BioEditor)
+        You also need a click handler on the Save button to make a fetch POST request to add / update the bio!
+            send along the bio user typed as part of the request (no formData needed here!)
+            upon a successful request, call setBio inside the function and pass to it the officalBio (the one you just got back from the db)
+            When the setBio function is called, the officalBio will flow back down to BioEditor from App.
+
+
+3 - Server
+
+add a bio column to the users table -->DONE!
+create a new POST route for updating the bio column in the database
+Make sure that the route in App that gets user info when APP mounts ALSO retrieves the stored bio for the user.  -->DONE!

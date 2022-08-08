@@ -17,13 +17,7 @@ export default function ProfilePic({ togglePopup, url, first, last }) {
     return (
         <>
             <div className="profilePicContainer">
-                <img
-                    id="profilePic"
-                    src={url}
-                    alt={altText}
-                    // alt={altText}
-                    onClick={togglePopup}
-                ></img>
+                <img src={url} alt={altText} onClick={togglePopup}></img>
             </div>
         </>
     );

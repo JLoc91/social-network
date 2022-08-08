@@ -34,7 +34,7 @@ export default class Uploader extends Component {
             .then((response) => response.json())
             .then((data) => {
                 console.log("data: ", data);
-                this.props.changeUrl(data.url, data.first, data.last);
+                this.props.changeUrl(data.url, data.first, data.last, data.bio);
                 this.props.togglePopup();
             })
             .catch((err) => {

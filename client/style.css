@@ -36,16 +36,31 @@ img.loggedIn {
     align-items: center;
 }
 
-#profilePic {
+.profileHeader .profilePicContainer img {
     border: 2px red solid;
     border-radius: 25%;
     width: 4rem;
     height: 4rem;
 }
 
+/* #profilePic {
+    border: 2px red solid;
+    border-radius: 25%;
+    width: 4rem;
+    height: 4rem;
+} */
+
 .profileHeader {
     display: flex;
     justify-content: space-between;
+}
+
+.profileBody {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 2rem;
+    margin-top: 2rem;
 }
 
 #transparentCover {
@@ -88,4 +103,15 @@ img.loggedIn {
     margin-right: 1vw;
     margin-top: 1vh;
     margin-bottom: 1vh;
+}
+
+#welcomeText {
+    margin-left: 2rem;
+}
+
+.profileBody .profilePicContainer img {
+    border: 2px red solid;
+    border-radius: 25%;
+    width: 7rem;
+    height: 7rem;
 }

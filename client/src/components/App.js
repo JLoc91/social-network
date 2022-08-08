@@ -1,6 +1,8 @@
 import { Component } from "react";
 import Logo from "./Logo";
+import Profile from "./Profile";
 import ProfilePic from "./ProfilePic";
+import BioEditor from "./BioEditor";
 import Uploader from "./Uploader";
 
 export default class App extends Component {
@@ -8,9 +10,10 @@ export default class App extends Component {
         super(props);
         this.state = {
             isPopupOpen: false,
-            url: "",
-            first: "",
-            last: "",
+            url: "testUrl",
+            first: "testFirst",
+            last: "testLast",
+            bio: "testBio",
         };
         this.togglePopup = this.togglePopup.bind(this);
         this.changeUrl = this.changeUrl.bind(this);
@@ -22,42 +25,59 @@ export default class App extends Component {
             .then((response) => response.json())
             .then((data) => {
                 console.log("data: ", data);
-                this.changeUrl(data.url, data.first, data.last);
-                // fetch informartion from the server
+                this.changeUrl(data.url, data.first, data.last, data.bio);
             });
     }
 
-    changeUrl(newUrl, newFirst, newLast) {
-        this.setState({ url: newUrl, first: newFirst, last: newLast });
+    changeUrl(newUrl, newFirst, newLast, newBio) {
+        this.setState({
+            url: newUrl,
+            first: newFirst,
+            last: newLast,
+            bio: newBio,
+        });
+    }
+
+    changeBio() {
+        this.setState({});
     }
 
     togglePopup() {
         this.setState({ isPopupOpen: !this.state.isPopupOpen });
     }
 
-    // imgFromApp() {
-    //     return d;
-    // }
-
     render() {
         return (
-            <div className="profileHeader">
-                <Logo />
-                <ProfilePic
-                    togglePopup={this.togglePopup}
-                    url={this.state.url}
-                    first={this.state.first}
-                    last={this.state.last}
-                />
-                {this.state.isPopupOpen && (
-                    <Uploader
-                        url={this.state.url}
+            <>
+                <div className="profileHeader">
+                    <Logo />
+                    <ProfilePic
                         togglePopup={this.togglePopup}
-                        changeUrl={this.changeUrl}
+                        url={this.state.url}
+                        first={this.state.first}
+                        last={this.state.last}
+                        bio={this.state.bio}
                     />
-                )}
-                {/* <h1>Hello from App</h1> */}
-            </div>
+
+                    {this.state.isPopupOpen && (
+                        <Uploader
+                            url={this.state.url}
+                            togglePopup={this.togglePopup}
+                            changeUrl={this.changeUrl}
+                        />
+                    )}
+                </div>
+                <div className="profileBody">
+                    <Profile
+                        togglePopup={this.togglePopup}
+                        url={this.state.url}
+                        first={this.state.first}
+                        last={this.state.last}
+                        bio={this.state.bio}
+                    />
+                    {/* <BioEditor /> */}
+                </div>
+            </>
         );
     }
 }
