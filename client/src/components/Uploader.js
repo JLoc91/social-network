@@ -35,6 +35,7 @@ export default class Uploader extends Component {
             .then((data) => {
                 console.log("data: ", data);
                 this.props.changeUrl(data.url, data.first, data.last);
+                this.props.togglePopup();
             })
             .catch((err) => {
                 console.log("err in image fetch: ", err);
