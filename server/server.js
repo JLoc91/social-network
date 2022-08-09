@@ -51,6 +51,27 @@ app.get("/userData", (req, res) => {
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
+app.get("/findPeoples", (req, res) => {
+    console.log("get recent users");
+    db.findPeopleStart()
+        .then((result) => {
+            console.log("result.rows: ", result.rows);
+            res.json(result.rows);
+        })
+        .catch((err) => console.log("err in getEverything: ", err));
+});
+
+app.get("/findPeople/:word", (req, res) => {
+    console.log("get recent users");
+    console.log("req.params.word: ", req.params.word);
+    db.findPeople(req.params.word)
+        .then((result) => {
+            console.log("result.rows: ", result.rows);
+            res.json(result.rows);
+        })
+        .catch((err) => console.log("err in getEverything: ", err));
+});
+
 app.post("/register", (req, res) => {
     console.log("register post received");
     console.log("req.body: ", req.body);

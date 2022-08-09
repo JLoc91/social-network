@@ -3,6 +3,8 @@ import Logo from "./Logo";
 import Profile from "./Profile";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
+import FindPeople from "./FindPeople";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 export default class App extends Component {
     constructor(props) {
@@ -49,34 +51,45 @@ export default class App extends Component {
     render() {
         return (
             <>
-                <div className="profileHeader">
-                    <Logo />
-                    <ProfilePic
-                        togglePopup={this.togglePopup}
-                        url={this.state.url}
-                        first={this.state.first}
-                        last={this.state.last}
-                        bio={this.state.bio}
-                    />
+                <BrowserRouter>
+                    <div>
+                        <Route exact path="/">
+                            <div className="profileHeader">
+                                <Logo />
+                                <Link to="/users">Look for new People!</Link>
+                                <ProfilePic
+                                    togglePopup={this.togglePopup}
+                                    url={this.state.url}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    bio={this.state.bio}
+                                />
 
-                    {this.state.isPopupOpen && (
-                        <Uploader
-                            url={this.state.url}
-                            togglePopup={this.togglePopup}
-                            changeUrl={this.changeUrl}
-                        />
-                    )}
-                </div>
-                <div className="profileBody">
-                    <Profile
-                        togglePopup={this.togglePopup}
-                        url={this.state.url}
-                        first={this.state.first}
-                        last={this.state.last}
-                        bio={this.state.bio}
-                        changeBio={this.changeBio}
-                    />
-                </div>
+                                {this.state.isPopupOpen && (
+                                    <Uploader
+                                        url={this.state.url}
+                                        togglePopup={this.togglePopup}
+                                        changeUrl={this.changeUrl}
+                                    />
+                                )}
+                            </div>
+                            <div className="profileBody">
+                                <Profile
+                                    togglePopup={this.togglePopup}
+                                    url={this.state.url}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    bio={this.state.bio}
+                                    changeBio={this.changeBio}
+                                />
+                            </div>
+                        </Route>
+                        <Route exact path="/users">
+                            <Link to="/">Back to Profile</Link>
+                            <FindPeople />
+                        </Route>
+                    </div>
+                </BrowserRouter>
             </>
         );
     }

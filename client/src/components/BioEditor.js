@@ -7,7 +7,7 @@ export default class BioEditor extends Component {
         this.showEditor = this.showEditor.bind(this);
         this.fetchNewBioToServer = this.fetchNewBioToServer.bind(this);
         this.onTextAreaInputChange = this.onTextAreaInputChange.bind(this);
-        this.changeBio = this.changeBio.bind(this);
+        this.changeBioInBioEditor = this.changeBioInBioEditor.bind(this);
         this.deleteText = this.deleteText.bind(this);
     }
 
@@ -46,6 +46,7 @@ export default class BioEditor extends Component {
                     this.props.bio
                 );
                 console.log("id at client from server: ", id);
+                this.props.changeBio(this.state.draftBio);
                 // location.href = "/";
             })
             .catch((err) => console.log("err in registration fetch: ", err));
@@ -63,7 +64,7 @@ export default class BioEditor extends Component {
         console.log("this.state.draftBio: ", this.state.draftBio);
     }
 
-    changeBio(e) {
+    changeBioInBioEditor(e) {
         e.preventDefault();
         this.showEditor();
         this.setState({ draftBio: this.props.bio });
@@ -100,8 +101,9 @@ export default class BioEditor extends Component {
                 return (
                     <>
                         <h2>{this.props.bio}</h2>
-                        {/* <h2>{this.state.draftBio}</h2> */}
-                        <button onClick={this.changeBio}>Edit</button>
+                        <button onClick={this.changeBioInBioEditor}>
+                            Edit
+                        </button>
                     </>
                 );
             } else {

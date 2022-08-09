@@ -157,6 +157,16 @@ module.exports.getEverything = (id) => {
     return db.query(`select * from ${tableUser} where id=${id}`);
 };
 
+module.exports.findPeopleStart = () => {
+    return db.query(`SELECT * FROM ${tableUser} ORDER BY id DESC LIMIT 3`);
+};
+
+module.exports.findPeople = (input) => {
+    return db.query(`SELECT * FROM ${tableUser} WHERE first ILIKE $1;`, [
+        input + "%",
+    ]);
+};
+
 module.exports.insertImage = (url, id) => {
     return db.query(
         `update ${tableUser} set url='${url}'
@@ -166,7 +176,8 @@ module.exports.insertImage = (url, id) => {
 
 module.exports.insertBio = (bio, id) => {
     return db.query(
-        `update ${tableUser} set bio='${bio}'
-        WHERE id=${id} returning *`
+        `update ${tableUser} set bio=$1
+        WHERE id=$2 returning *`,
+        [bio, id]
     );
 };

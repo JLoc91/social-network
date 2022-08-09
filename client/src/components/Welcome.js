@@ -25,7 +25,6 @@ class Welcome extends Component {
                         </Route>
                     </div>
                 </BrowserRouter>
-                {/* <Registration /> */}
             </>
         );
     }
