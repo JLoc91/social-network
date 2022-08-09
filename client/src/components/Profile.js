@@ -2,7 +2,14 @@ import react from "react";
 import ProfilePic from "./ProfilePic";
 import BioEditor from "./BioEditor";
 
-export default function Profile({ togglePopup, url, first, last, bio }) {
+export default function Profile({
+    togglePopup,
+    url,
+    first,
+    last,
+    bio,
+    changeBio,
+}) {
     // export default function Profile() {
     console.log("togglePopup: ", togglePopup);
     console.log("url: ", url);
@@ -21,7 +28,7 @@ export default function Profile({ togglePopup, url, first, last, bio }) {
             <h1 id="welcomeText">
                 {first} {last}
             </h1>
-            {/* <BioEditor bio={bio} /> */}
+            <BioEditor changeBio={changeBio} bio={bio} />
         </>
     );
 }

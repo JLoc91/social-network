@@ -163,3 +163,10 @@ module.exports.insertImage = (url, id) => {
         WHERE id=${id} returning *`
     );
 };
+
+module.exports.insertBio = (bio, id) => {
+    return db.query(
+        `update ${tableUser} set bio='${bio}'
+        WHERE id=${id} returning *`
+    );
+};

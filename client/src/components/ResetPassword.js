@@ -114,6 +114,7 @@ class ResetPassword extends Component {
                     <form id="reset" onSubmit={this.onCodeFormSubmit}>
                         <label htmlFor="email">Email: </label>
                         <input
+                            key={1}
                             type="email"
                             name="email"
                             value={this.state.email}
@@ -133,6 +134,7 @@ class ResetPassword extends Component {
                     <form id="enterCode" onSubmit={this.onResetFormSubmit}>
                         <label htmlFor="code">Code: </label>
                         <input
+                            key={2}
                             type="text"
                             name="code"
                             value={this.state.code}
@@ -142,6 +144,7 @@ class ResetPassword extends Component {
 
                         <label htmlFor="newPassword">New Password: </label>
                         <input
+                            key={3}
                             type="password"
                             name="newPassword"
                             value={this.state.newPassword}

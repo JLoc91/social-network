@@ -168,6 +168,20 @@ app.post("/sendCode", (req, res) => {
         .catch((err) => console.log("err in checkEmail: ", err));
 });
 
+app.post("/addBio", (req, res) => {
+    // send the email if the user is registered
+
+    console.log("req.body in addBio: ", req.body);
+    console.log("req.body.draftBio in addBio: ", req.body.draftBio);
+    console.log("typeof req.body.draftBio: ", typeof req.body.draftBio);
+    db.insertBio(req.body.draftBio, req.session.userid)
+        .then((result) => {
+            console.log("Bio Rückgabe: ", result.rows[0].email);
+            res.json(result.rows[0]);
+        })
+        .catch((err) => console.log("err in addBio: ", err));
+});
+
 //from imageboard
 app.post("/image", uploader.single("photo"), s3.upload, (req, res) => {
     //grab the image that was sent [multer]
@@ -211,22 +225,22 @@ app.post("/image", uploader.single("photo"), s3.upload, (req, res) => {
     }
 });
 
-app.post("/bio", (req, res) => {
-    console.log("req.body in sendCode: ", req.body);
-    db.checkEmail(req.body.email)
-        .then((result) => {
-            console.log("email Rückgabe: ", result.rows[0].email);
-            const secretCode = cryptoRandomString({
-                length: 6,
-            });
+// app.post("/bio", (req, res) => {
+//     console.log("req.body in sendCode: ", req.body);
+//     db.checkEmail(req.body.email)
+//         .then((result) => {
+//             console.log("email Rückgabe: ", result.rows[0].email);
+//             const secretCode = cryptoRandomString({
+//                 length: 6,
+//             });
 
-            db.insertCode(result.rows[0].email, secretCode).then((result) => {
-                sendEmail(result.rows[0].email, secretCode);
-                res.json(result.rows[0]);
-            });
-        })
-        .catch((err) => console.log("err in checkEmail: ", err));
-});
+//             db.insertCode(result.rows[0].email, secretCode).then((result) => {
+//                 sendEmail(result.rows[0].email, secretCode);
+//                 res.json(result.rows[0]);
+//             });
+//         })
+//         .catch((err) => console.log("err in checkEmail: ", err));
+// });
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

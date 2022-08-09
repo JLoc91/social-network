@@ -2,7 +2,6 @@ import { Component } from "react";
 import Logo from "./Logo";
 import Profile from "./Profile";
 import ProfilePic from "./ProfilePic";
-import BioEditor from "./BioEditor";
 import Uploader from "./Uploader";
 
 export default class App extends Component {
@@ -17,6 +16,7 @@ export default class App extends Component {
         };
         this.togglePopup = this.togglePopup.bind(this);
         this.changeUrl = this.changeUrl.bind(this);
+        this.changeBio = this.changeBio.bind(this);
     }
 
     componentDidMount() {
@@ -38,8 +38,8 @@ export default class App extends Component {
         });
     }
 
-    changeBio() {
-        this.setState({});
+    changeBio(newBio) {
+        this.setState({ bio: newBio });
     }
 
     togglePopup() {
@@ -74,8 +74,8 @@ export default class App extends Component {
                         first={this.state.first}
                         last={this.state.last}
                         bio={this.state.bio}
+                        changeBio={this.changeBio}
                     />
-                    {/* <BioEditor /> */}
                 </div>
             </>
         );
