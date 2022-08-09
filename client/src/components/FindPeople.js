@@ -14,7 +14,7 @@ export default function FindPeople() {
                 console.log("data from findPeopleStart: ", data);
                 setPeople(data);
             });
-    }, []);
+    }, [word == ""]);
 
     useEffect(() => {
         console.log("useEffect is running");
@@ -33,40 +33,116 @@ export default function FindPeople() {
     //     setFirst(e.target.value);
     // }
 
-    return (
-        <div>
-            <h2>Find People</h2>
-            <h3>Checkout who just joined!</h3>
+    if (!word == "") {
+        return (
+            <div>
+                <h2>Find People</h2>
+                <input
+                    key={1}
+                    // onChange={handleInput}
+                    onChange={(e) => setWord(e.target.value)}
+                    defaultValue={word}
+                    placeholder="Enter Name"
+                />
+                {/* <ul> */}
+                {people.map((item) => (
+                    <li key={item.id}>
+                        <img
+                            src={
+                                item.url ||
+                                "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
+                            }
+                            alt={item.first}
+                            className="findPeople"
+                            // onClick={togglePopup}
+                        ></img>
+                        <h2>
+                            {item.first} {item.last}
+                        </h2>
+                    </li>
+                ))}
+                {/* </ul> */}
 
-            {/* <ul> */}
-            {people.map((item) => (
-                <li key={item.id}>
-                    <img
-                        src={
-                            item.url ||
-                            "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
-                        }
-                        alt={item.first}
-                        className="findPeople"
-                        // onClick={togglePopup}
-                    ></img>
-                    <h2>
-                        {item.first} {item.last}
-                    </h2>
-                </li>
-            ))}
-            {/* </ul> */}
-            <h3>Are you looking for someone in particular?</h3>
-            <input
-                // onChange={handleInput}
-                onChange={(e) => setWord(e.target.value)}
-                defaultValue={word}
-                placeholder="Enter Name"
-            />
-            {/* <input
+                {/* <input
                 placeholder="type country"
                 onChange={(e) => setCountry(e.target.value)}
             /> */}
-        </div>
-    );
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <h2>Find People</h2>
+                <h3>Checkout who just joined!</h3>
+
+                {/* <ul> */}
+                {people.map((item) => (
+                    <li key={item.id}>
+                        <img
+                            src={
+                                item.url ||
+                                "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
+                            }
+                            alt={item.first}
+                            className="findPeople"
+                            // onClick={togglePopup}
+                        ></img>
+                        <h2>
+                            {item.first} {item.last}
+                        </h2>
+                    </li>
+                ))}
+                {/* </ul> */}
+                <h3>Are you looking for someone in particular?</h3>
+                <input
+                    key={1}
+                    // onChange={handleInput}
+                    onChange={(e) => setWord(e.target.value)}
+                    defaultValue={word}
+                    placeholder="Enter Name"
+                />
+                {/* <input
+                placeholder="type country"
+                onChange={(e) => setCountry(e.target.value)}
+            /> */}
+            </div>
+        );
+    }
+
+    // return (
+    //     <div>
+    //         <h2>Find People</h2>
+    //         <h3>Checkout who just joined!</h3>
+
+    //         {/* <ul> */}
+    //         {people.map((item) => (
+    //             <li key={item.id}>
+    //                 <img
+    //                     src={
+    //                         item.url ||
+    //                         "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
+    //                     }
+    //                     alt={item.first}
+    //                     className="findPeople"
+    //                     // onClick={togglePopup}
+    //                 ></img>
+    //                 <h2>
+    //                     {item.first} {item.last}
+    //                 </h2>
+    //             </li>
+    //         ))}
+    //         {/* </ul> */}
+    //         <h3>Are you looking for someone in particular?</h3>
+    //         <input
+    //             // onChange={handleInput}
+    //             onChange={(e) => setWord(e.target.value)}
+    //             defaultValue={word}
+    //             placeholder="Enter Name"
+    //         />
+    //         {/* <input
+    //             placeholder="type country"
+    //             onChange={(e) => setCountry(e.target.value)}
+    //         /> */}
+    //     </div>
+    // );
 }
