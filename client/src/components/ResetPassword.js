@@ -32,7 +32,7 @@ class ResetPassword extends Component {
             code: this.state.code,
         };
         console.log("userData in sendcode: ", userData);
-        fetch("/sendCode", {
+        fetch("/api/sendCode", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -64,7 +64,7 @@ class ResetPassword extends Component {
             newPassword: this.state.newPassword,
         };
         console.log("userData in Reset: ", userData);
-        fetch("/reset-password", {
+        fetch("/api/reset-password", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -111,18 +111,24 @@ class ResetPassword extends Component {
             return (
                 <>
                     <h2>Reset your password</h2>
+                    <br></br>
                     <form id="reset" onSubmit={this.onCodeFormSubmit}>
-                        <label htmlFor="email">Email: </label>
+                        {/* <label htmlFor="email">Email: </label> */}
                         <input
                             key={1}
                             type="email"
                             name="email"
+                            placeholder="Email"
                             value={this.state.email}
                             onChange={this.onFormInputChange}
                         ></input>
                         <p></p>
                         <button type="submit">Submit</button>
                     </form>
+                    <br></br>
+                    <span>
+                        <Link to="/login">Back to Log in!</Link>
+                    </span>
                 </>
             );
         } else if (this.state.view === 2) {
@@ -131,28 +137,36 @@ class ResetPassword extends Component {
             return (
                 <>
                     <h2>Reset your password</h2>
+                    <br></br>
                     <form id="enterCode" onSubmit={this.onResetFormSubmit}>
-                        <label htmlFor="code">Code: </label>
+                        {/* <label htmlFor="code">Code: </label> */}
                         <input
                             key={2}
                             type="text"
                             name="code"
+                            placeholder="Code"
                             value={this.state.code}
                             onChange={this.onFormInputChange}
                         ></input>
                         <p></p>
 
-                        <label htmlFor="newPassword">New Password: </label>
+                        {/* <label htmlFor="newPassword">New Password: </label> */}
                         <input
                             key={3}
                             type="password"
                             name="newPassword"
+                            placeholder="New Password"
                             value={this.state.newPassword}
                             onChange={this.onFormInputChange}
                         ></input>
                         <p></p>
                         <button type="submit">Submit</button>
                     </form>
+                    <br></br>
+
+                    <span>
+                        <Link to="/login">Back to Log in!</Link>
+                    </span>
                 </>
             );
         } else if (this.state.view === 3) {

@@ -9,11 +9,14 @@ class Welcome extends Component {
     render() {
         return (
             <>
-                <h1>Welcome!</h1>
-                <Logo />
+                <div className="logoWelcome">
+                    <Logo />
+                </div>
                 <br></br>
                 <BrowserRouter>
-                    <div>
+                    <div id="welcome-container">
+                        <h1>Welcome!</h1>
+                        <br></br>
                         <Route exact path="/">
                             <Registration />
                         </Route>

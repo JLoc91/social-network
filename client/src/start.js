@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import Welcome from "./components/Welcome";
 import App from "./components/App";
 
-fetch("/user/id.json")
+fetch("/api/user/id.json")
     .then((response) => response.json())
     .then((data) => {
         console.log("data.user: ", data.user);

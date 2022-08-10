@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Logo from "./Logo";
 import Profile from "./Profile";
+import OtherProfile from "./OtherProfile";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import FindPeople from "./FindPeople";
@@ -23,7 +24,7 @@ export default class App extends Component {
 
     componentDidMount() {
         console.log("Component Mounted");
-        fetch("/userData")
+        fetch("/api/userData")
             .then((response) => response.json())
             .then((data) => {
                 console.log("data: ", data);
@@ -55,7 +56,9 @@ export default class App extends Component {
                     <div>
                         <Route exact path="/">
                             <div className="profileHeader">
-                                <Logo />
+                                <div className="logoApp">
+                                    <Logo />
+                                </div>
                                 <Link to="/users">Look for new People!</Link>
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
@@ -85,8 +88,54 @@ export default class App extends Component {
                             </div>
                         </Route>
                         <Route exact path="/users">
-                            <Link to="/">Back to Profile</Link>
-                            <FindPeople />
+                            <div className="profileHeader">
+                                <div className="logoApp">
+                                    <Logo />
+                                </div>
+                                <Link to="/">Back to Profile</Link>
+                                <ProfilePic
+                                    togglePopup={this.togglePopup}
+                                    url={this.state.url}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    bio={this.state.bio}
+                                />
+                                {this.state.isPopupOpen && (
+                                    <Uploader
+                                        url={this.state.url}
+                                        togglePopup={this.togglePopup}
+                                        changeUrl={this.changeUrl}
+                                    />
+                                )}
+                            </div>
+                            <div className="profileBody">
+                                <FindPeople />
+                            </div>
+                        </Route>
+                        <Route path="/user/:userId">
+                            <div className="profileHeader">
+                                <div className="logoApp">
+                                    <Logo />
+                                </div>
+                                <Link to="/users">Look for new People!</Link>
+                                <ProfilePic
+                                    togglePopup={this.togglePopup}
+                                    url={this.state.url}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    bio={this.state.bio}
+                                />
+                                {this.state.isPopupOpen && (
+                                    <Uploader
+                                        url={this.state.url}
+                                        togglePopup={this.togglePopup}
+                                        changeUrl={this.changeUrl}
+                                    />
+                                )}
+                            </div>
+                            <div className="profileBody">
+                                <OtherProfile />
+                            </div>
                         </Route>
                     </div>
                 </BrowserRouter>

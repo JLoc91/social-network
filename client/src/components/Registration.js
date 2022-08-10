@@ -45,7 +45,7 @@ class Registration extends Component {
             password: this.state.password,
         };
         console.log("userData in Registration: ", userData);
-        fetch("/register", {
+        fetch("/api/register", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -67,35 +67,39 @@ class Registration extends Component {
 
                 <form id="registration" onSubmit={this.onFormSubmit}>
                     <br></br>
-                    <label htmlFor="first">First Name: </label>
+                    {/* <label htmlFor="first">First Name: </label> */}
                     <input
                         type="text"
                         name="first"
+                        placeholder="First Name"
                         value={this.state.first}
                         onChange={this.onFormInputChange}
                     ></input>
                     <br></br>
-                    <label htmlFor="last">Last Name: </label>
+                    {/* <label htmlFor="last">Last Name: </label> */}
                     <input
                         type="text"
                         name="last"
+                        placeholder="Last Name"
                         value={this.state.last}
                         onChange={this.onFormInputChange}
                         // className={this.state.errors.last ? "error"}
                     ></input>
                     <br></br>
-                    <label htmlFor="email">Email: </label>
+                    {/* <label htmlFor="email">Email: </label> */}
                     <input
                         type="email"
                         name="email"
+                        placeholder="Email"
                         value={this.state.email}
                         onChange={this.onFormInputChange}
                     ></input>
                     <br></br>
-                    <label htmlFor="password">Password: </label>
+                    {/* <label htmlFor="password">Password: </label> */}
                     <input
                         type="password"
                         name="password"
+                        placeholder="Password"
                         value={this.state.password}
                         onChange={this.onFormInputChange}
                     ></input>
@@ -106,7 +110,8 @@ class Registration extends Component {
                     <br></br>
                 </form>
 
-                <p></p>
+                <br></br>
+
                 <span>
                     Already a Member?
                     <Link to="/login">Click here to Log in!</Link>

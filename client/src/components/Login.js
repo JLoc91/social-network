@@ -42,7 +42,7 @@ class Login extends Component {
             password: this.state.password,
         };
         console.log("userData in Login: ", userData);
-        fetch("/login", {
+        fetch("/api/login", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -74,20 +74,22 @@ class Login extends Component {
         return (
             <>
                 <span>Login Here!</span>
-
+                <br></br>
                 <form id="login" onSubmit={this.onFormSubmit}>
-                    <label htmlFor="email">Email: </label>
+                    {/* <label htmlFor="email">Email: </label> */}
                     <input
                         type="email"
                         name="email"
+                        placeholder="Email"
                         value={this.state.email}
                         onChange={this.onFormInputChange}
                     ></input>
                     <br></br>
-                    <label htmlFor="password">Password: </label>
+                    {/* <label htmlFor="password">Password: </label> */}
                     <input
                         type="password"
                         name="password"
+                        placeholder="Password"
                         value={this.state.password}
                         onChange={this.onFormInputChange}
                     ></input>

@@ -8,7 +8,7 @@ export default function FindPeople() {
 
     useEffect(() => {
         console.log("render starting user");
-        fetch(`/findPeoples`)
+        fetch(`/api/findPeoples`)
             .then((resp) => resp.json())
             .then((data) => {
                 console.log("data from findPeopleStart: ", data);
@@ -20,7 +20,7 @@ export default function FindPeople() {
         console.log("useEffect is running");
         // console.log(`${first} has been rendered in useEffect!`);
         console.log("word before fetch: ", word);
-        fetch(`/findPeople/${word}`)
+        fetch(`/api/findPeople/${word}`)
             .then((resp) => resp.json())
             .then((data) => {
                 console.log("data from findPeople: ", data);
@@ -46,20 +46,28 @@ export default function FindPeople() {
                 />
                 {/* <ul> */}
                 {people.map((item) => (
-                    <li key={item.id}>
-                        <img
-                            src={
-                                item.url ||
-                                "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
-                            }
-                            alt={item.first}
-                            className="findPeople"
-                            // onClick={togglePopup}
-                        ></img>
-                        <h2>
-                            {item.first} {item.last}
-                        </h2>
-                    </li>
+                    // <li key={item.id}>
+                    <>
+                        <div key={item.id} id="profile">
+                            <div className="profilePicContainer">
+                                <img
+                                    src={
+                                        item.url ||
+                                        "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
+                                    }
+                                    alt={item.first}
+                                    className="findPeople"
+                                    onClick={() =>
+                                        (location.href = `/user/${item.id}`)
+                                    }
+                                ></img>
+                            </div>
+                            <h2>
+                                {item.first} {item.last}
+                            </h2>
+                            {/* </li> */}
+                        </div>
+                    </>
                 ))}
                 {/* </ul> */}
 
@@ -77,20 +85,29 @@ export default function FindPeople() {
 
                 {/* <ul> */}
                 {people.map((item) => (
-                    <li key={item.id}>
-                        <img
-                            src={
-                                item.url ||
-                                "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
-                            }
-                            alt={item.first}
-                            className="findPeople"
-                            // onClick={togglePopup}
-                        ></img>
-                        <h2>
-                            {item.first} {item.last}
-                        </h2>
-                    </li>
+                    // <li key={item.id}>
+                    <>
+                        <div key={item.id} id="profile">
+                            <div className="profilePicContainer">
+                                <img
+                                    src={
+                                        item.url ||
+                                        "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
+                                    }
+                                    alt={item.first}
+                                    className="findPeople"
+                                    onClick={() =>
+                                        (location.href = `/user/${item.id}`)
+                                    }
+                                ></img>
+                            </div>
+                            <h2>
+                                {item.first} {item.last}
+                            </h2>
+                        </div>
+                        <br></br>
+                    </>
+                    // </li>
                 ))}
                 {/* </ul> */}
                 <h3>Are you looking for someone in particular?</h3>

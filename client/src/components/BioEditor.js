@@ -28,7 +28,7 @@ export default class BioEditor extends Component {
             draftBio: this.state.draftBio,
         };
         console.log("bioData in FetchNewBioToServer: ", bioData);
-        fetch("/addBio", {
+        fetch("/api/addBio", {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -100,7 +100,7 @@ export default class BioEditor extends Component {
                 console.log("this.props.bio: ", this.props.bio);
                 return (
                     <>
-                        <h2>{this.props.bio}</h2>
+                        <p className="bioText">{this.props.bio}</p>
                         <button onClick={this.changeBioInBioEditor}>
                             Edit
                         </button>

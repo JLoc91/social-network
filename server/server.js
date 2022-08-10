@@ -32,7 +32,7 @@ app.use(compression());
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.get("/user/id.json", function (req, res) {
+app.get("/api/user/id.json", function (req, res) {
     console.log("req.session.userid in user/id.json: ", req.session.userid);
 
     res.json({
@@ -40,7 +40,7 @@ app.get("/user/id.json", function (req, res) {
     });
 });
 
-app.get("/userData", (req, res) => {
+app.get("/api/userData", (req, res) => {
     console.log("get all user data");
     req.session.userid;
     db.getEverything(req.session.userid)
@@ -51,7 +51,25 @@ app.get("/userData", (req, res) => {
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
-app.get("/findPeoples", (req, res) => {
+app.get("/api/userData/:id", (req, res) => {
+    console.log("get all user data");
+    console.log("req.params.id: ", req.params.id);
+    console.log("req.session.userid: ", req.session.userid);
+    let sameUser = false;
+    if (req.params.id == req.session.userid) {
+        sameUser = true;
+    }
+
+    db.getEverything(req.params.id)
+        .then((result) => {
+            console.log("result.rows[0]: ", result.rows[0]);
+            result.rows[0].sameUser = sameUser;
+            res.json(result.rows[0]);
+        })
+        .catch((err) => console.log("err in getEverything: ", err));
+});
+
+app.get("/api/findPeoples", (req, res) => {
     console.log("get recent users");
     db.findPeopleStart()
         .then((result) => {
@@ -61,7 +79,7 @@ app.get("/findPeoples", (req, res) => {
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
-app.get("/findPeople/:word", (req, res) => {
+app.get("/api/findPeople/:word", (req, res) => {
     console.log("get recent users");
     console.log("req.params.word: ", req.params.word);
     db.findPeople(req.params.word)
@@ -72,7 +90,7 @@ app.get("/findPeople/:word", (req, res) => {
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
-app.post("/register", (req, res) => {
+app.post("/api/register", (req, res) => {
     console.log("register post received");
     console.log("req.body: ", req.body);
     if (
@@ -103,7 +121,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post(
-    "/login",
+    "/api/login",
     (req, res) => {
         // if (req.session.userid) {
         //     res.redirect("/");
@@ -143,7 +161,7 @@ app.post(
     // }
 );
 
-app.post("/reset-password", (req, res) => {
+app.post("/api/reset-password", (req, res) => {
     // check code and email, and UPDATE the password
     console.log("req.body in reset-password: ", req.body);
     //check if code and email are same
@@ -170,7 +188,7 @@ app.post("/reset-password", (req, res) => {
     return;
 });
 
-app.post("/sendCode", (req, res) => {
+app.post("/api/sendCode", (req, res) => {
     // send the email if the user is registered
 
     console.log("req.body in sendCode: ", req.body);
@@ -189,7 +207,7 @@ app.post("/sendCode", (req, res) => {
         .catch((err) => console.log("err in checkEmail: ", err));
 });
 
-app.post("/addBio", (req, res) => {
+app.post("/api/addBio", (req, res) => {
     // send the email if the user is registered
 
     console.log("req.body in addBio: ", req.body);
@@ -204,7 +222,7 @@ app.post("/addBio", (req, res) => {
 });
 
 //from imageboard
-app.post("/image", uploader.single("photo"), s3.upload, (req, res) => {
+app.post("/api/image", uploader.single("photo"), s3.upload, (req, res) => {
     //grab the image that was sent [multer]
     //save it somewhere [multer]
     //respond to the client - success/failure

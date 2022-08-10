@@ -11,17 +11,53 @@ body {
     background-color: ghostwhite;
 }
 
+#welcome-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 form#registration input,
 form#registration label {
     display: block;
 }
 
 img {
-    width: 35vw;
+    object-fit: cover;
 }
 
-img.loggedIn {
+/* img.loggedIn {
     width: 18vw;
+    border-radius: 50%;
+} */
+
+#login,
+#registration,
+#reset,
+#enterCode {
+    display: flex;
+    flex-direction: column;
+}
+
+.logoApp img {
+    width: 18vw;
+    max-width: 12rem;
+    min-width: 5rem;
+    border-radius: 50%;
+}
+
+.logoWelcome {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.logoWelcome img {
+    width: 24vw;
+    max-width: 18rem;
+    min-width: 5rem;
+    border-radius: 50%;
 }
 
 .error {
@@ -37,10 +73,20 @@ img.loggedIn {
 }
 
 .profileHeader .profilePicContainer img {
-    border: 2px red solid;
-    border-radius: 25%;
-    width: 4rem;
-    height: 4rem;
+    /* border: 2px red solid;
+    border-radius: 25%; */
+    width: 14vw;
+    max-width: 9rem;
+    min-width: 4rem;
+    height: 14vw;
+    max-height: 9rem;
+    min-height: 4rem;
+}
+
+.profileHeader img {
+    margin-top: 1.5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
 }
 
 /* #profilePic {
@@ -109,13 +155,25 @@ img.loggedIn {
     margin-left: 2rem;
 }
 
-.profileBody .profilePicContainer img {
+.profilePicContainer img {
     border: 2px red solid;
     border-radius: 25%;
-    width: 7rem;
-    height: 7rem;
+}
+
+.profileBody .profilePicContainer img {
+    width: 17vw;
+    min-width: 5rem;
+    max-width: 11rem;
+    height: 17vw;
+    min-height: 5rem;
+    max-height: 11rem;
 }
 
 .findPeople {
     width: 8rem;
+}
+
+.bioText {
+    width: 25vw;
+    min-width: 8rem;
 }

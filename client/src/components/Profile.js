@@ -25,10 +25,12 @@ export default function Profile({
                 first={first}
                 last={last}
             />
-            <h1 id="welcomeText">
-                {first} {last}
-            </h1>
-            <BioEditor changeBio={changeBio} bio={bio} />
+            <div id="welcomeText">
+                <h1>
+                    {first} {last}
+                </h1>
+                <BioEditor changeBio={changeBio} bio={bio} />
+            </div>
         </>
     );
 }

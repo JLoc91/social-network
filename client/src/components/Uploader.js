@@ -24,7 +24,7 @@ export default class Uploader extends Component {
 
         const formData = new FormData(form);
         console.log("formData: ", formData);
-        fetch("/image", {
+        fetch("/api/image", {
             method: "post",
             // headers: {
             //     "Content-Type": "application/json",
@@ -51,7 +51,7 @@ export default class Uploader extends Component {
                         CLOSE
                     </h3>
                     <form
-                        action="/image"
+                        action="/api/image"
                         method="post"
                         encType="multipart/form-data"
                         onSubmit={this.onImageFormSubmit}
