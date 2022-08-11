@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
 import { useState, Link } from "react";
+import FriendButton from "./FriendButton";
 
 export default function OtherProfile() {
     const { userId } = useParams();
@@ -12,9 +13,9 @@ export default function OtherProfile() {
         .then((response) => response.json())
         .then((data) => {
             console.log("data.sameUser: ", data.sameUser);
-            if (data.sameUser) {
-                location.href("/");
-            }
+            // if (data.sameUser) {
+            //     location.href("/");
+            // }
             console.log("data: ", data);
             console.log("data.bio: ", data.bio);
             setBio(data.bio);
@@ -37,6 +38,7 @@ export default function OtherProfile() {
                     {first} {last}
                 </h1>
                 <p className="bioText">{bio}</p>
+                <FriendButton userId={userId} />
             </div>
         </>
     );

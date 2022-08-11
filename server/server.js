@@ -55,15 +55,34 @@ app.get("/api/userData/:id", (req, res) => {
     console.log("get all user data");
     console.log("req.params.id: ", req.params.id);
     console.log("req.session.userid: ", req.session.userid);
-    let sameUser = false;
-    if (req.params.id == req.session.userid) {
-        sameUser = true;
-    }
+    // let sameUser = false;
+    // if (req.params.id == req.session.userid) {
+    //     sameUser = true;
+    // }
 
     db.getEverything(req.params.id)
         .then((result) => {
             console.log("result.rows[0]: ", result.rows[0]);
-            result.rows[0].sameUser = sameUser;
+            // result.rows[0].sameUser = sameUser;
+            res.json(result.rows[0]);
+        })
+        .catch((err) => console.log("err in getEverything: ", err));
+});
+
+app.get("/api/getFriendship/:id", (req, res) => {
+    console.log("get all friendship data");
+    console.log("req.params.id: ", req.params.id);
+    const paramsId = parseInt(req.params.id);
+    console.log("req.session.userid: ", req.session.userid);
+
+    db.getFriendshipInfo(paramsId, req.session.userid)
+        .then((result) => {
+            let myRequest = false;
+            if (result.rows[0].sender_id == req.session.userid) {
+                myRequest = true;
+            }
+            result.rows[0].myRequest = myRequest;
+            console.log("result.rows[0]: ", result.rows[0]);
             res.json(result.rows[0]);
         })
         .catch((err) => console.log("err in getEverything: ", err));
@@ -219,6 +238,37 @@ app.post("/api/addBio", (req, res) => {
             res.json(result.rows[0]);
         })
         .catch((err) => console.log("err in addBio: ", err));
+});
+
+app.post(`/api/addFriendship/:id`, (req, res) => {
+    console.log("in addFriendship");
+    console.log("req.params.id: ", req.params.id);
+    db.insertFriendship(req.session.id, req.params.id).then((result) => {
+        console.log("result.rows[0]: ", result.rows[0]);
+    });
+    // console.log("req.body.draftBio in addBio: ", req.body.draftBio);
+    // console.log("typeof req.body.draftBio: ", typeof req.body.draftBio);
+    // db.insertBio(req.body.draftBio, req.session.userid)
+    //     .then((result) => {
+    //         console.log("Bio Rückgabe: ", result.rows[0].email);
+    //         res.json(result.rows[0]);
+    //     })
+    //     .catch((err) => console.log("err in addBio: ", err));
+});
+
+app.post(`/api/deleteFriendship/:id`, (req, res) => {
+    console.log("in deleteFriendship");
+
+    console.log("req.params.id: ", req.params.id);
+    res.json({});
+    // console.log("req.body.draftBio in addBio: ", req.body.draftBio);
+    // console.log("typeof req.body.draftBio: ", typeof req.body.draftBio);
+    // db.insertBio(req.body.draftBio, req.session.userid)
+    //     .then((result) => {
+    //         console.log("Bio Rückgabe: ", result.rows[0].email);
+    //         res.json(result.rows[0]);
+    //     })
+    //     .catch((err) => console.log("err in addBio: ", err));
 });
 
 //from imageboard

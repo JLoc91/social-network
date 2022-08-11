@@ -177,3 +177,13 @@ img {
     width: 25vw;
     min-width: 8rem;
 }
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile h2 {
+    margin-left: 1.5rem;
+}

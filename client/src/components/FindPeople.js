@@ -44,11 +44,12 @@ export default function FindPeople() {
                     defaultValue={word}
                     placeholder="Enter Name"
                 />
+                <br></br>
                 {/* <ul> */}
                 {people.map((item) => (
                     // <li key={item.id}>
                     <>
-                        <div key={item.id} id="profile">
+                        <div key={item.id} className="profile">
                             <div className="profilePicContainer">
                                 <img
                                     src={
@@ -67,6 +68,7 @@ export default function FindPeople() {
                             </h2>
                             {/* </li> */}
                         </div>
+                        <br></br>
                     </>
                 ))}
                 {/* </ul> */}
@@ -87,7 +89,7 @@ export default function FindPeople() {
                 {people.map((item) => (
                     // <li key={item.id}>
                     <>
-                        <div key={item.id} id="profile">
+                        <div key={item.id} className="profile">
                             <div className="profilePicContainer">
                                 <img
                                     src={

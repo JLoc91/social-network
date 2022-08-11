@@ -1,6 +1,7 @@
 const spicedPg = require("spiced-pg");
 const tableUser = "users";
 const tableCode = "reset_codes";
+const tableFriendships = "friendships";
 const bcrypt = require("bcryptjs");
 // const { profile } = require("console");
 let dbURL;
@@ -179,5 +180,21 @@ module.exports.insertBio = (bio, id) => {
         `update ${tableUser} set bio=$1
         WHERE id=$2 returning *`,
         [bio, id]
+    );
+};
+
+module.exports.getFriendshipInfo = (user1, user2) => {
+    const query = `
+        SELECT * FROM ${tableFriendships}
+        WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1)`;
+    return db.query(query, [user1, user2]);
+};
+
+module.exports.insertFriendship = (user1, user2) => {
+    return db.query(
+        `insert into ${tableFriendships} (sender_id, recipient_it, accepted)
+    values ($1, $2) returning *`,
+        [user1, user2, false]
     );
 };
