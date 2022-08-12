@@ -193,8 +193,24 @@ module.exports.getFriendshipInfo = (user1, user2) => {
 
 module.exports.insertFriendship = (user1, user2) => {
     return db.query(
-        `insert into ${tableFriendships} (sender_id, recipient_it, accepted)
-    values ($1, $2) returning *`,
+        `insert into ${tableFriendships} (sender_id, recipient_id, accepted)
+    values ($1, $2, $3) returning *`,
         [user1, user2, false]
     );
+};
+
+module.exports.acceptFriendship = (user1, user2) => {
+    console.log("user1: ", user1);
+    console.log("user2: ", user2);
+    const query = `update ${tableFriendships} set accepted = true
+    WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1) returning *`;
+    return db.query(query, [user1, user2]);
+};
+
+module.exports.deleteFriendship = (user1, user2) => {
+    const query = `
+        DELETE FROM ${tableFriendships} WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1)`;
+    return db.query(query, [user1, user2]);
 };

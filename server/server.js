@@ -242,33 +242,39 @@ app.post("/api/addBio", (req, res) => {
 
 app.post(`/api/addFriendship/:id`, (req, res) => {
     console.log("in addFriendship");
+    req.session.userid;
     console.log("req.params.id: ", req.params.id);
-    db.insertFriendship(req.session.id, req.params.id).then((result) => {
-        console.log("result.rows[0]: ", result.rows[0]);
+    db.insertFriendship(req.session.userid, req.params.id).then((result) => {
+        let myRequest = false;
+        if (result.rows[0].sender_id == req.session.userid) {
+            myRequest = true;
+        }
+        result.rows[0].myRequest = myRequest;
+        console.log("result.rows[0] after addFriendship: ", result.rows[0]);
+        res.json(result.rows[0]);
     });
-    // console.log("req.body.draftBio in addBio: ", req.body.draftBio);
-    // console.log("typeof req.body.draftBio: ", typeof req.body.draftBio);
-    // db.insertBio(req.body.draftBio, req.session.userid)
-    //     .then((result) => {
-    //         console.log("Bio Rückgabe: ", result.rows[0].email);
-    //         res.json(result.rows[0]);
-    //     })
-    //     .catch((err) => console.log("err in addBio: ", err));
+});
+
+app.post(`/api/acceptFriendship/:id`, (req, res) => {
+    console.log("in acceptFriendship");
+    req.session.userid;
+    console.log("req.params.id: ", req.params.id);
+    db.acceptFriendship(req.session.userid, req.params.id)
+        .then((result) => {
+            console.log("result.rows[0] after addFriendship: ", result.rows[0]);
+            res.json(result.rows[0]);
+        })
+        .catch((err) => console.log("err in acceptFriendship: ", err));
 });
 
 app.post(`/api/deleteFriendship/:id`, (req, res) => {
     console.log("in deleteFriendship");
 
     console.log("req.params.id: ", req.params.id);
-    res.json({});
-    // console.log("req.body.draftBio in addBio: ", req.body.draftBio);
-    // console.log("typeof req.body.draftBio: ", typeof req.body.draftBio);
-    // db.insertBio(req.body.draftBio, req.session.userid)
-    //     .then((result) => {
-    //         console.log("Bio Rückgabe: ", result.rows[0].email);
-    //         res.json(result.rows[0]);
-    //     })
-    //     .catch((err) => console.log("err in addBio: ", err));
+    db.deleteFriendship(req.session.userid, req.params.id).then((result) => {
+        console.log("result.rows[0] after deleteFriendship: ", result.rows[0]);
+        res.json({});
+    });
 });
 
 //from imageboard
