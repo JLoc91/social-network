@@ -5,7 +5,11 @@ const path = require("path");
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const s3 = require("./s3.js");
-const { uploader } = require("./middleware.js");
+const {
+    uploader,
+    notLoggedInRedirect,
+    loggedInRedirect,
+} = require("./middleware.js");
 const db = require("./db");
 const cryptoRandomString = require("crypto-random-string");
 const { sendEmail } = require("./ses.js");
@@ -107,6 +111,12 @@ app.get("/api/findPeople/:word", (req, res) => {
             res.json(result.rows);
         })
         .catch((err) => console.log("err in getEverything: ", err));
+});
+
+app.get("/api/logout", (req, res) => {
+    console.log("user logged out");
+    req.session = undefined;
+    res.redirect("/");
 });
 
 app.post("/api/register", (req, res) => {

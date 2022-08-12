@@ -19,3 +19,15 @@ module.exports.uploader = multer({
         fileSize: 2097152,
     },
 });
+
+module.exports.notLoggedInRedirect = (req, res) => {
+    if (!req.session.userid) {
+        res.redirect("/");
+    }
+};
+
+module.exports.loggedInRedirect = (req, res) => {
+    if (req.session.userid) {
+        res.redirect("/");
+    }
+};
