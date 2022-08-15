@@ -214,3 +214,14 @@ module.exports.deleteFriendship = (user1, user2) => {
         OR (sender_id = $2 AND recipient_id = $1)`;
     return db.query(query, [user1, user2]);
 };
+
+module.exports.getFriendsAndWannabes = (user) => {
+    const query = `
+    SELECT ${tableUser}.id, first, last, accepted, url FROM ${tableUser}
+    JOIN ${tableFriendships}
+    ON (accepted = true AND recipient_id = $1 AND ${tableUser}.id = ${tableFriendships}.sender_id)
+    OR (accepted = true AND sender_id = $1 AND ${tableUser}.id = ${tableFriendships}.recipient_id)
+    OR (accepted = false AND recipient_id = $1 AND ${tableUser}.id = ${tableFriendships}.sender_id)
+    `;
+    return db.query(query, [user]);
+};

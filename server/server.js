@@ -92,6 +92,21 @@ app.get("/api/getFriendship/:id", (req, res) => {
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
+app.get("/api/getFriendsAndWannabes", (req, res) => {
+    console.log("get all friends' and wannabes' data");
+    console.log("req.session.userid: ", req.session.userid);
+
+    db.getFriendsAndWannabes(req.session.userid)
+        .then((result) => {
+            console.log(
+                "result.rows from getFriendsAndWannabes: ",
+                result.rows
+            );
+            res.json(result.rows);
+        })
+        .catch((err) => console.log("err in getFriendsAndWannabe: ", err));
+});
+
 app.get("/api/findPeoples", (req, res) => {
     console.log("get recent users");
     db.findPeopleStart()

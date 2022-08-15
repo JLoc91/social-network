@@ -5,6 +5,7 @@ import OtherProfile from "./OtherProfile";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import FindPeople from "./FindPeople";
+import Friends from "./Friends";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 export default class App extends Component {
@@ -60,6 +61,7 @@ export default class App extends Component {
                                     <Logo />
                                 </div>
                                 <Link to="/users">Look for new People!</Link>
+                                <Link to="/friends">Friends</Link>
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -93,6 +95,8 @@ export default class App extends Component {
                                     <Logo />
                                 </div>
                                 <Link to="/">Back to Profile</Link>
+                                <Link to="/friends">Friends</Link>
+
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -118,6 +122,8 @@ export default class App extends Component {
                                     <Logo />
                                 </div>
                                 <Link to="/users">Look for new People!</Link>
+                                <Link to="/friends">Friends</Link>
+
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -135,6 +141,31 @@ export default class App extends Component {
                             </div>
                             <div className="profileBody">
                                 <OtherProfile />
+                            </div>
+                        </Route>
+                        <Route path="/friends">
+                            <div className="profileHeader">
+                                <div className="logoApp">
+                                    <Logo />
+                                </div>
+                                <Link to="/users">Look for new People!</Link>
+                                <ProfilePic
+                                    togglePopup={this.togglePopup}
+                                    url={this.state.url}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    bio={this.state.bio}
+                                />
+                                {this.state.isPopupOpen && (
+                                    <Uploader
+                                        url={this.state.url}
+                                        togglePopup={this.togglePopup}
+                                        changeUrl={this.changeUrl}
+                                    />
+                                )}
+                            </div>
+                            <div className="profileBody">
+                                <Friends />
                             </div>
                         </Route>
                     </div>
