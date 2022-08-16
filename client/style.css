@@ -187,3 +187,29 @@ img {
 .profile h2 {
     margin-left: 1.5rem;
 }
+
+.wannabes,
+.friends {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#friendscontainer h2,
+#friendscontainer p {
+    margin-bottom: 0.8rem;
+}
+
+.wannabe,
+.friend {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+}
+
+.nameAndButton {
+    display: flex;
+    flex-direction: column;
+}

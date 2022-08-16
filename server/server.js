@@ -286,7 +286,10 @@ app.post(`/api/acceptFriendship/:id`, (req, res) => {
     console.log("req.params.id: ", req.params.id);
     db.acceptFriendship(req.session.userid, req.params.id)
         .then((result) => {
-            console.log("result.rows[0] after addFriendship: ", result.rows[0]);
+            console.log(
+                "result.rows[0] after acceptFriendship: ",
+                result.rows[0]
+            );
             res.json(result.rows[0]);
         })
         .catch((err) => console.log("err in acceptFriendship: ", err));
@@ -297,8 +300,8 @@ app.post(`/api/deleteFriendship/:id`, (req, res) => {
 
     console.log("req.params.id: ", req.params.id);
     db.deleteFriendship(req.session.userid, req.params.id).then((result) => {
-        console.log("result.rows[0] after deleteFriendship: ", result.rows[0]);
-        res.json({});
+        console.log("result.rows after deleteFriendship: ", result.rows);
+        res.json({success: true});
     });
 });
 

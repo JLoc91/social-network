@@ -1,19 +1,39 @@
-export default function friendAndWannabes(friends = [], action) {
+export default function friendAndWannabes(friendsAndWannabe = {}, action) {
+    console.log("friendsAndWannabe: ", friendsAndWannabe);
     if (action.type === "friends-and-wannabes/received") {
-        friends = action.payload.friendsAndWannabe;
+        friendsAndWannabe = action.payload.friendsAndWannabe;
     }
 
-    // if (action.type === "friends-and-wannabes/accept") {
-    //     const newFriends = [];
-    //     friends.map(/** do something with action.payload.id... */);
-    //     return newFriends;
-    // }
+    if (action.type === "friends-and-wannabes/accept") {
+        const friendships = friendsAndWannabe.friendships.map((friend) => {
+            console.log("friend: ", friend);
+            if (friend.id === action.payload.id) {
+                console.log("it's a match!");
+                console.log("{...friend}: ", { ...friend });
+                return {
+                    ...friend,
+                    accepted: true,
+                };
+            } else {
+                return friend;
+            }
+        });
+        friendsAndWannabe = { ...friendsAndWannabe, friendships };
+    }
 
-    // if (action.type === "friends-and-wannabes/unfriend") {
-    //     return;
-    // }
+    if (action.type === "friends-and-wannabes/unfriend") {
+        const friendships = [];
+        friendsAndWannabe.friendships.map((friend) => {
+            console.log("friend: ", friend);
+            if (friend.id !== action.payload.id) {
+                friendships.push(friend);
+            }
+        });
+        friendsAndWannabe = { ...friendsAndWannabe, friendships };
+    }
 
-    return friends;
+    console.log("friendsAndWannabe after action: ", friendsAndWannabe);
+    return friendsAndWannabe;
 }
 
 // Creators of actions
@@ -34,14 +54,14 @@ export function receiveFriendsAndWannabes(friendsAndWannabe) {
 
 export function acceptFriend(id) {
     return {
-        type: "/friends-and-wannabes/accept",
+        type: "friends-and-wannabes/accept",
         payload: { id },
     };
 }
 
 export function unfriend(id) {
     return {
-        type: "/friends-and-wannabes/unfriend",
+        type: "friends-and-wannabes/unfriend",
         payload: { id },
     };
 }
