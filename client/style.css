@@ -213,3 +213,37 @@ img {
     display: flex;
     flex-direction: column;
 }
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    border: 2px black dotted;
+    width: 50vw;
+    height: 40vh;
+}
+
+.chatBoard {
+    display: flex;
+    flex-direction: column;
+    border: 2px red dotted;
+    width: 50vw;
+    height: 30vh;
+}
+.chatMessages {
+display: flex;
+    flex-direction: column;
+}
+
+.chatMessage {
+display: flex;
+    flex-direction: row;
+}
+.messagePic img {
+        width: 7vw;
+    min-width: 2rem;
+    max-width: 5rem;
+    height: 7vw;
+    min-height: 2rem;
+    max-height: 5rem;
+    border: 1px red solid;
+}

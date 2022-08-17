@@ -2,6 +2,7 @@ const spicedPg = require("spiced-pg");
 const tableUser = "users";
 const tableCode = "reset_codes";
 const tableFriendships = "friendships";
+const tableChatMessages = "chat_messages";
 const bcrypt = require("bcryptjs");
 // const { profile } = require("console");
 let dbURL;
@@ -224,4 +225,13 @@ module.exports.getFriendsAndWannabes = (user) => {
     OR (accepted = false AND recipient_id = $1 AND ${tableUser}.id = ${tableFriendships}.sender_id)
     `;
     return db.query(query, [user]);
+};
+
+module.exports.getChatMessages = () => {
+    const query = `
+    SELECT ${tableChatMessages}.id, ${tableChatMessages}.user_id, message, ${tableChatMessages}.timestamp, ${tableUser}.first, ${tableUser}.last, ${tableUser}.url FROM ${tableChatMessages}
+    JOIN ${tableUser}
+    ON (${tableChatMessages}.user_id = ${tableUser}.id)
+    `;
+    return db.query(query);
 };

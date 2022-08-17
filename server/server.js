@@ -127,6 +127,16 @@ app.get("/api/findPeoples", (req, res) => {
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
+app.get("/api/getChatMessages", (req, res) => {
+    console.log("get recent chat messages");
+    db.getChatMessages()
+        .then((result) => {
+            console.log("result.rows: ", result.rows);
+            res.json(result.rows);
+        })
+        .catch((err) => console.log("err in getEverything: ", err));
+});
+
 app.get("/api/findPeople/:word", (req, res) => {
     console.log("get recent users");
     console.log("req.params.word: ", req.params.word);
@@ -259,6 +269,17 @@ app.post("/api/sendCode", (req, res) => {
             });
         })
         .catch((err) => console.log("err in checkEmail: ", err));
+});
+
+app.post("/api/sendMessage", (req, res) => {
+    // send the email if the user is registered
+
+    console.log("req.body in sendMessage: ", req.body);
+    db.insertMessage(req.body)
+        .then((result) => {
+            console.log("sendMessage Rückgabe: ", result.rows);
+        })
+        .catch((err) => console.log("err in insertMessage: ", err));
 });
 
 app.post("/api/addBio", (req, res) => {

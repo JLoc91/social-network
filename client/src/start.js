@@ -7,21 +7,15 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./redux/reducer.js";
 import { Provider } from "react-redux";
 //part 10
-import { io } from "socket.io-client";
-
-//part10
-const socket = io.connect();
-
-socket.on("hello", (data) => {
-    console.log("data from server: ", data);
-});
-
-socket.emit("cool people", ["andrea", "sven", "layla"]);
+import { init } from "./socket.js";
 
 const store = createStore(
     rootReducer,
     composeWithDevTools(applyMiddleware(immutableState.default()))
 );
+
+//part10
+
 
 fetch("/api/user/id.json")
     .then((response) => response.json())
@@ -30,6 +24,7 @@ fetch("/api/user/id.json")
         if (!data.userid) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
+            init(store);
             ReactDOM.render(
                 <Provider store={store}>
                     <App />
