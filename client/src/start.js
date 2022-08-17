@@ -6,6 +6,17 @@ import * as immutableState from "redux-immutable-state-invariant";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./redux/reducer.js";
 import { Provider } from "react-redux";
+//part 10
+import { io } from "socket.io-client";
+
+//part10
+const socket = io.connect();
+
+socket.on("hello", (data) => {
+    console.log("data from server: ", data);
+});
+
+socket.emit("cool people", ["andrea", "sven", "layla"]);
 
 const store = createStore(
     rootReducer,

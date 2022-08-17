@@ -6,6 +6,7 @@ import ProfilePic from "./ProfilePic";
 import Uploader from "./Uploader";
 import FindPeople from "./FindPeople";
 import Friends from "./Friends";
+import Chat from "./chat/Chat";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 export default class App extends Component {
@@ -62,6 +63,7 @@ export default class App extends Component {
                                 </div>
                                 <Link to="/users">Look for new People!</Link>
                                 <Link to="/friends">Friends</Link>
+                                <Link to="/chat">Chat</Link>
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -96,6 +98,7 @@ export default class App extends Component {
                                 </div>
                                 <Link to="/">Back to Profile</Link>
                                 <Link to="/friends">Friends</Link>
+                                <Link to="/chat">Chat</Link>
 
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
@@ -123,7 +126,7 @@ export default class App extends Component {
                                 </div>
                                 <Link to="/users">Look for new People!</Link>
                                 <Link to="/friends">Friends</Link>
-
+                                <Link to="/chat">Chat</Link>
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -149,6 +152,7 @@ export default class App extends Component {
                                     <Logo />
                                 </div>
                                 <Link to="/users">Look for new People!</Link>
+                                <Link to="/chat">Chat</Link>
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -166,6 +170,31 @@ export default class App extends Component {
                             </div>
                             <div className="profileBody">
                                 <Friends />
+                            </div>
+                        </Route>
+                        <Route path="/chat">
+                            <div className="profileHeader">
+                                <div className="logoApp">
+                                    <Logo />
+                                </div>
+                                <Link to="/users">Look for new People!</Link>
+                                <ProfilePic
+                                    togglePopup={this.togglePopup}
+                                    url={this.state.url}
+                                    first={this.state.first}
+                                    last={this.state.last}
+                                    bio={this.state.bio}
+                                />
+                                {this.state.isPopupOpen && (
+                                    <Uploader
+                                        url={this.state.url}
+                                        togglePopup={this.togglePopup}
+                                        changeUrl={this.changeUrl}
+                                    />
+                                )}
+                            </div>
+                            <div className="profileBody">
+                                <Chat />
                             </div>
                         </Route>
                     </div>

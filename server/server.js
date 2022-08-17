@@ -1,5 +1,11 @@
 const express = require("express");
 const app = express();
+//part 10
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
 const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
@@ -17,13 +23,17 @@ const { sendEmail } = require("./ses.js");
 const COOKIE_SECRET =
     process.env.COOKIE_SECRET || require("./secrets.json").COOKIE_SECRET;
 
-app.use(
-    cookieSession({
-        secret: COOKIE_SECRET,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-        sameSite: true,
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: COOKIE_SECRET,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+    sameSite: true,
+});
+
+app.use(cookieSessionMiddleware);
+//part10
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(cookieParser());
 
@@ -301,7 +311,7 @@ app.post(`/api/deleteFriendship/:id`, (req, res) => {
     console.log("req.params.id: ", req.params.id);
     db.deleteFriendship(req.session.userid, req.params.id).then((result) => {
         console.log("result.rows after deleteFriendship: ", result.rows);
-        res.json({success: true});
+        res.json({ success: true });
     });
 });
 
@@ -348,27 +358,28 @@ app.post("/api/image", uploader.single("photo"), s3.upload, (req, res) => {
     }
 });
 
-// app.post("/bio", (req, res) => {
-//     console.log("req.body in sendCode: ", req.body);
-//     db.checkEmail(req.body.email)
-//         .then((result) => {
-//             console.log("email Rückgabe: ", result.rows[0].email);
-//             const secretCode = cryptoRandomString({
-//                 length: 6,
-//             });
-
-//             db.insertCode(result.rows[0].email, secretCode).then((result) => {
-//                 sendEmail(result.rows[0].email, secretCode);
-//                 res.json(result.rows[0]);
-//             });
-//         })
-//         .catch((err) => console.log("err in checkEmail: ", err));
-// });
-
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+//changed to server.listen because of part 10, socket.io
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
+});
+
+io.on("connection", (socket) => {
+    if (!socket.request.session.userId) {
+        console.log("no userId");
+        return socket.disconnect(true);
+    }
+
+    console.log(`Socket with id: ${socket.id} has connected`);
+
+    socket.emit("hello", {
+        cohort: "Buckwheat",
+    });
+
+    socket.on("cool people", (data) => {
+        console.log("data incoming from client: ", data);
+    });
 });
