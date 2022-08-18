@@ -14,7 +14,7 @@ export default function FriendsAndWannabes() {
             state.friendsList.friendships &&
             state.friendsList.friendships.filter((friend) => !friend.accepted)
     );
-    console.log("wannabes: ", wannabes);
+    // console.log("wannabes: ", wannabes);
 
     const friends = useSelector(
         (state) =>
@@ -22,17 +22,17 @@ export default function FriendsAndWannabes() {
             state.friendsList.friendships.filter((friend) => friend.accepted)
     );
 
-    console.log("friends: ", friends);
+    // console.log("friends: ", friends);
 
     // load data from server and pass it to redux
     // only when the component first loads!
     useEffect(() => {
         // if (!wannabes) {
         (async () => {
-            console.log("render Friends");
+            // console.log("render Friends");
             const res = await fetch(`/api/getFriendsAndWannabes`);
             const data = await res.json();
-            console.log("data from findPeopleStart: ", data);
+            // console.log("data from findPeopleStart: ", data);
             const alteredData = { friendships: data };
             // STEP 5!!!!
             dispatch(receiveFriendsAndWannabes(alteredData));
@@ -61,7 +61,7 @@ export default function FriendsAndWannabes() {
             method: "post",
         });
         const data = await res.json();
-        console.log("data from handleAccept: ", data);
+        // console.log("data from handleAccept: ", data);
         dispatch(acceptFriend(data.sender_id));
     };
     const handleUnfriend = async (id) => {
@@ -69,7 +69,7 @@ export default function FriendsAndWannabes() {
             method: "post",
         });
         const data = await res.json();
-        console.log("data from handleUnfriend: ", data);
+        // console.log("data from handleUnfriend: ", data);
         if (data.success) {
             dispatch(unfriend(id));
         } else {

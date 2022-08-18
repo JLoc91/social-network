@@ -24,24 +24,24 @@ class Login extends Component {
 
     onFormInputChange(e) {
         const target = e.currentTarget;
-        console.log("target.value: ", target.value);
+        // console.log("target.value: ", target.value);
 
         this.setState({
             [target.name]: target.value,
         });
-        console.log("[target.name]: ", [target.name]);
+        // console.log("[target.name]: ", [target.name]);
     }
 
     onFormSubmit(e) {
         e.preventDefault();
-        console.log("try to submit login form");
+        // console.log("try to submit login form");
         const userData = {
             first: this.state.first,
             last: this.state.last,
             email: this.state.email,
             password: this.state.password,
         };
-        console.log("userData in Login: ", userData);
+        // console.log("userData in Login: ", userData);
         fetch("/api/login", {
             method: "post",
             headers: {
@@ -55,7 +55,7 @@ class Login extends Component {
                 //     console.log("data.error: ", data.error);
                 // }
 
-                console.log("data at client from server: ", data);
+                // console.log("data at client from server: ", data);
                 if (!data.userid) {
                     console.log("stay at /login");
                     throw console.error("Credentials not correct");

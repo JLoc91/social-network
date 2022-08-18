@@ -60,27 +60,16 @@ function capitalizeParameter(par) {
             eachWord[i].charAt(0).toUpperCase() + eachWord[i].substring(1);
     }
     let fullPar = eachWord.join(" ");
-    console.log("fullPar: ", fullPar);
     return fullPar;
 }
 
 module.exports.authenticate = (email, password) => {
     return findUser(email)
         .then((result) => {
-            console.log("result.rows[0]: ", result.rows[0]);
             if (!result.rows[0]) {
                 console.log("kein user gefunden");
                 return [];
             } else {
-                console.log(
-                    "result.rows in findUser: ",
-                    result.rows[0].password
-                );
-                console.log("password in findUser: ", password);
-                console.log(
-                    "result.rows[0].id in findUser: ",
-                    result.rows[0].id
-                );
                 let userid = result.rows[0].id;
                 const resultObj = {
                     enteredPassword: password,
@@ -90,12 +79,8 @@ module.exports.authenticate = (email, password) => {
 
                 return comparePassword(password, result.rows[0].password)
                     .then((passwordCheck) => {
-                        console.log("passwordCheck: ", passwordCheck);
                         resultObj.passwordCheck = passwordCheck;
-                        console.log(
-                            "resultObj in comparePassword: ",
-                            resultObj
-                        );
+
                         return resultObj;
                     })
                     .catch((err) =>
@@ -107,19 +92,15 @@ module.exports.authenticate = (email, password) => {
 };
 
 function findUser(email) {
-    console.log("email in findUser: ", email);
     return db.query(`select * from ${tableUser}
     where "email" = '${email}'`);
 }
 
 function comparePassword(password, dbPassword) {
-    console.log("password: ", password);
-    console.log("dbPassword: ", dbPassword);
     return bcrypt.compare(password, dbPassword);
 }
 
 module.exports.checkEmail = (email) => {
-    console.log("email: ", email);
     return db.query(`select * from users where email='${email}'`);
 };
 
@@ -142,9 +123,6 @@ and email='${email}'`
 module.exports.changePassword = (newPassword, email) => {
     return hashPassword(newPassword)
         .then((hash) => {
-            console.log("hash: ", hash);
-            console.log("newPassword: ", newPassword);
-            console.log("email: ", email);
             newPassword = hash;
             // use other approach with values
             return db.query(
@@ -201,8 +179,6 @@ module.exports.insertFriendship = (user1, user2) => {
 };
 
 module.exports.acceptFriendship = (user1, user2) => {
-    console.log("user1: ", user1);
-    console.log("user2: ", user2);
     const query = `update ${tableFriendships} set accepted = true
     WHERE (sender_id = $1 AND recipient_id = $2)
         OR (sender_id = $2 AND recipient_id = $1) returning *`;
@@ -248,4 +224,25 @@ module.exports.getUserInfo = (userId) => {
     select first, last, url from ${tableUser} where id=$1
     `;
     return db.query(query, [userId]);
+};
+
+module.exports.getOnlineUser = () => {
+    const query = `
+    select id, first, last, url from ${tableUser} where online=true
+    `;
+    return db.query(query);
+};
+
+module.exports.insertOnlineUser = (id) => {
+    const query = `
+    UPDATE ${tableUser} set online=true where id=$1
+    `;
+    return db.query(query, [id]);
+};
+
+module.exports.setUserOffline = (id) => {
+    const query = `
+    UPDATE ${tableUser} set online=false where id=$1
+    `;
+    return db.query(query, [id]);
 };

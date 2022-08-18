@@ -7,23 +7,23 @@ export default function FindPeople() {
     const [people, setPeople] = useState([]);
 
     useEffect(() => {
-        console.log("render starting user");
+        // console.log("render starting user");
         fetch(`/api/findPeoples`)
             .then((resp) => resp.json())
             .then((data) => {
-                console.log("data from findPeopleStart: ", data);
+                // console.log("data from findPeopleStart: ", data);
                 setPeople(data);
             });
     }, [word == ""]);
 
     useEffect(() => {
-        console.log("useEffect is running");
+        // console.log("useEffect is running");
         // console.log(`${first} has been rendered in useEffect!`);
-        console.log("word before fetch: ", word);
+        // console.log("word before fetch: ", word);
         fetch(`/api/findPeople/${word}`)
             .then((resp) => resp.json())
             .then((data) => {
-                console.log("data from findPeople: ", data);
+                // console.log("data from findPeople: ", data);
                 setPeople(data);
             });
     }, [word]);

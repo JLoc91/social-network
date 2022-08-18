@@ -30,5 +30,9 @@ CREATE TABLE chat_messages(
   );
 
 
-  select chat_messages.id, chat_messages.user_id, message, chat_messages.timestamp from chat_messages join users on (ch
-at_messages.user_id = users.id);
+ALTER TABLE users
+ADD online BOOLEAN NOT NULL 
+DEFAULT False;
+
+  ALTER TABLE users
+  DROP COLUMN online;

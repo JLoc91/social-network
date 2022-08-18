@@ -29,7 +29,6 @@ export default class App extends Component {
         fetch("/api/userData")
             .then((response) => response.json())
             .then((data) => {
-                console.log("data: ", data);
                 this.changeUrl(data.url, data.first, data.last, data.bio);
             });
     }

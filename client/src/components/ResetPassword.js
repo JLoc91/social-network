@@ -16,22 +16,22 @@ class ResetPassword extends Component {
 
     onFormInputChange(e) {
         const target = e.currentTarget;
-        console.log("target.value: ", target.value);
+   
 
         this.setState({
             [target.name]: target.value,
         });
-        console.log("[target.name]: ", [target.name]);
+ 
     }
 
     onCodeFormSubmit(e) {
         e.preventDefault();
-        console.log("try to submit sendcode form");
+   
         const userData = {
             email: this.state.email,
             code: this.state.code,
         };
-        console.log("userData in sendcode: ", userData);
+     
         fetch("/api/sendCode", {
             method: "post",
             headers: {
@@ -42,13 +42,8 @@ class ResetPassword extends Component {
             .then((response) => response.json())
             .then((data) => {
                 this.startResetPassword();
-                console.log("this.state.view: ", this.state.view);
-                console.log("this.state.email: ", this.state.email);
-                console.log("this.state.code: ", this.state.code);
-                console.log("userData.code: ", userData.code);
-                console.log("data.code: ", data.code);
-                // this.setState({this.state.code: data.code});
-                console.log("data at client from server: ", data);
+
+ 
             })
             .catch((err) => {
                 console.log("err in reset fetch: ", err);
@@ -57,13 +52,13 @@ class ResetPassword extends Component {
     }
     onResetFormSubmit(e) {
         e.preventDefault();
-        console.log("try to submit reset form");
+     
         const userData = {
             email: this.state.email,
             code: this.state.code,
             newPassword: this.state.newPassword,
         };
-        console.log("userData in Reset: ", userData);
+       
         fetch("/api/reset-password", {
             method: "post",
             headers: {
@@ -74,11 +69,7 @@ class ResetPassword extends Component {
             .then((response) => response.json())
             .then((data) => {
                 this.endResetPassword();
-                console.log("this.state.view: ", this.state.view);
-                console.log("this.state.email: ", this.state.email);
-                console.log("this.state.code: ", this.state.code);
-                console.log("userData.code: ", userData.code);
-                console.log("data.code: ", data.code);
+
 
                 // if (!data.userid) {
                 //     console.log("stay at /reset-password");
@@ -103,7 +94,7 @@ class ResetPassword extends Component {
     }
 
     currentView() {
-        console.log("this.state.view: ", this.state.view);
+
         if (this.state.view === 1) {
             //first view
             // console.log("this.state.code in 1st view: ", this.state.code);

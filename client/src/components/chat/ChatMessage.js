@@ -1,5 +1,5 @@
 export default function ChatMessage({chatMessage}) {
-    console.log("chatMessage in ChatMessage: ", chatMessage);
+
     return (
         <>
             <div className="chatMessage">

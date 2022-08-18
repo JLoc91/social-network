@@ -1,15 +1,14 @@
 export default function friendAndWannabes(friendsAndWannabe = {}, action) {
-    console.log("friendsAndWannabe: ", friendsAndWannabe);
+  
     if (action.type === "friends-and-wannabes/received") {
         friendsAndWannabe = action.payload.friendsAndWannabe;
     }
 
     if (action.type === "friends-and-wannabes/accept") {
         const friendships = friendsAndWannabe.friendships.map((friend) => {
-            console.log("friend: ", friend);
+          
             if (friend.id === action.payload.id) {
-                console.log("it's a match!");
-                console.log("{...friend}: ", { ...friend });
+       
                 return {
                     ...friend,
                     accepted: true,
@@ -24,7 +23,7 @@ export default function friendAndWannabes(friendsAndWannabe = {}, action) {
     if (action.type === "friends-and-wannabes/unfriend") {
         const friendships = [];
         friendsAndWannabe.friendships.map((friend) => {
-            console.log("friend: ", friend);
+   
             if (friend.id !== action.payload.id) {
                 friendships.push(friend);
             }
@@ -32,7 +31,7 @@ export default function friendAndWannabes(friendsAndWannabe = {}, action) {
         friendsAndWannabe = { ...friendsAndWannabe, friendships };
     }
 
-    console.log("friendsAndWannabe after action: ", friendsAndWannabe);
+  
     return friendsAndWannabe;
 }
 

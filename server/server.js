@@ -55,39 +55,24 @@ app.get("/api/user/id.json", function (req, res) {
 });
 
 app.get("/api/userData", (req, res) => {
-    console.log("get all user data");
     req.session.userid;
     db.getEverything(req.session.userid)
         .then((result) => {
-            console.log("result.rows[0]: ", result.rows[0]);
             res.json(result.rows[0]);
         })
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
 app.get("/api/userData/:id", (req, res) => {
-    console.log("get all user data");
-    console.log("req.params.id: ", req.params.id);
-    console.log("req.session.userid: ", req.session.userid);
-    // let sameUser = false;
-    // if (req.params.id == req.session.userid) {
-    //     sameUser = true;
-    // }
-
     db.getEverything(req.params.id)
         .then((result) => {
-            console.log("result.rows[0]: ", result.rows[0]);
-            // result.rows[0].sameUser = sameUser;
             res.json(result.rows[0]);
         })
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
 app.get("/api/getFriendship/:id", (req, res) => {
-    console.log("get all friendship data");
-    console.log("req.params.id: ", req.params.id);
     const paramsId = parseInt(req.params.id);
-    console.log("req.session.userid: ", req.session.userid);
 
     db.getFriendshipInfo(paramsId, req.session.userid)
         .then((result) => {
@@ -96,43 +81,31 @@ app.get("/api/getFriendship/:id", (req, res) => {
                 myRequest = true;
             }
             result.rows[0].myRequest = myRequest;
-            console.log("result.rows[0]: ", result.rows[0]);
+
             res.json(result.rows[0]);
         })
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
 app.get("/api/getFriendsAndWannabes", (req, res) => {
-    console.log("get all friends' and wannabes' data");
-    console.log("req.session.userid: ", req.session.userid);
-
     db.getFriendsAndWannabes(req.session.userid)
         .then((result) => {
-            console.log(
-                "result.rows from getFriendsAndWannabes: ",
-                result.rows
-            );
             res.json(result.rows);
         })
         .catch((err) => console.log("err in getFriendsAndWannabe: ", err));
 });
 
 app.get("/api/findPeoples", (req, res) => {
-    console.log("get recent users");
     db.findPeopleStart()
         .then((result) => {
-            console.log("result.rows: ", result.rows);
             res.json(result.rows);
         })
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
 app.get("/api/findPeople/:word", (req, res) => {
-    console.log("get recent users");
-    console.log("req.params.word: ", req.params.word);
     db.findPeople(req.params.word)
         .then((result) => {
-            console.log("result.rows: ", result.rows);
             res.json(result.rows);
         })
         .catch((err) => console.log("err in getEverything: ", err));
@@ -145,8 +118,6 @@ app.get("/api/logout", (req, res) => {
 });
 
 app.post("/api/register", (req, res) => {
-    console.log("register post received");
-    console.log("req.body: ", req.body);
     if (
         req.body.first == "" ||
         req.body.last == "" ||
@@ -177,11 +148,6 @@ app.post("/api/register", (req, res) => {
 app.post(
     "/api/login",
     (req, res) => {
-        // if (req.session.userid) {
-        //     res.redirect("/");
-        // } else {
-        console.log("login post received");
-        console.log("req.body: ", req.body);
         if (req.body.email === "" || req.body.password === "") {
             console.log("!!!ALL FIELDS MUST BE FILLED!!!");
             // res.render("/", {
@@ -190,10 +156,8 @@ app.post(
             // res.json({ error: true });
             res.json({});
         } else {
-            console.log("req.body before authenticate: ", req.body);
             db.authenticate(req.body.email, req.body.password)
                 .then((resultObj) => {
-                    console.log("resultObj: ", resultObj);
                     if (resultObj.passwordCheck) {
                         req.session.userid = resultObj.userid;
 
@@ -217,13 +181,10 @@ app.post(
 
 app.post("/api/reset-password", (req, res) => {
     // check code and email, and UPDATE the password
-    console.log("req.body in reset-password: ", req.body);
     //check if code and email are same
     db.getCodesFromDb(req.body.email)
         .then((data) => {
-            console.log("data in checkCode: ", data.rows);
             for (let i = 0; i < data.rows.length; i++) {
-                console.log("data.rows[i]: ", data.rows[i]);
                 if (req.body.code === data.rows[i].code) {
                     console.log("code is correct");
                     db.changePassword(
@@ -231,7 +192,7 @@ app.post("/api/reset-password", (req, res) => {
                         req.body.email
                     ).then((data) => {
                         console.log("password successfully changed ");
-                        console.log("data: ", data);
+
                         res.json({});
                     });
                 }
@@ -245,10 +206,8 @@ app.post("/api/reset-password", (req, res) => {
 app.post("/api/sendCode", (req, res) => {
     // send the email if the user is registered
 
-    console.log("req.body in sendCode: ", req.body);
     db.checkEmail(req.body.email)
         .then((result) => {
-            console.log("email Rückgabe: ", result.rows[0].email);
             const secretCode = cryptoRandomString({
                 length: 6,
             });
@@ -264,7 +223,6 @@ app.post("/api/sendCode", (req, res) => {
 app.post("/api/sendMessage", (req, res) => {
     // send the email if the user is registered
 
-    console.log("req.body in sendMessage: ", req.body);
     db.insertMessage(req.body)
         .then((result) => {
             console.log("sendMessage Rückgabe: ", result.rows);
@@ -275,53 +233,39 @@ app.post("/api/sendMessage", (req, res) => {
 app.post("/api/addBio", (req, res) => {
     // send the email if the user is registered
 
-    console.log("req.body in addBio: ", req.body);
-    console.log("req.body.draftBio in addBio: ", req.body.draftBio);
-    console.log("typeof req.body.draftBio: ", typeof req.body.draftBio);
     db.insertBio(req.body.draftBio, req.session.userid)
         .then((result) => {
-            console.log("Bio Rückgabe: ", result.rows[0].email);
             res.json(result.rows[0]);
         })
         .catch((err) => console.log("err in addBio: ", err));
 });
 
 app.post(`/api/addFriendship/:id`, (req, res) => {
-    console.log("in addFriendship");
     req.session.userid;
-    console.log("req.params.id: ", req.params.id);
+
     db.insertFriendship(req.session.userid, req.params.id).then((result) => {
         let myRequest = false;
         if (result.rows[0].sender_id == req.session.userid) {
             myRequest = true;
         }
         result.rows[0].myRequest = myRequest;
-        console.log("result.rows[0] after addFriendship: ", result.rows[0]);
+
         res.json(result.rows[0]);
     });
 });
 
 app.post(`/api/acceptFriendship/:id`, (req, res) => {
-    console.log("in acceptFriendship");
     req.session.userid;
-    console.log("req.params.id: ", req.params.id);
+
     db.acceptFriendship(req.session.userid, req.params.id)
         .then((result) => {
-            console.log(
-                "result.rows[0] after acceptFriendship: ",
-                result.rows[0]
-            );
             res.json(result.rows[0]);
         })
         .catch((err) => console.log("err in acceptFriendship: ", err));
 });
 
 app.post(`/api/deleteFriendship/:id`, (req, res) => {
-    console.log("in deleteFriendship");
-
-    console.log("req.params.id: ", req.params.id);
     db.deleteFriendship(req.session.userid, req.params.id).then((result) => {
-        console.log("result.rows after deleteFriendship: ", result.rows);
         res.json({ success: true });
     });
 });
@@ -331,9 +275,6 @@ app.post("/api/image", uploader.single("photo"), s3.upload, (req, res) => {
     //grab the image that was sent [multer]
     //save it somewhere [multer]
     //respond to the client - success/failure
-    console.log("req.session.userid in app.post: ", req.session.userid);
-    console.log("req.file in app.post : ", req.file);
-    console.log("req.body in app.post : ", req.body);
 
     //req.file is created by MUlter if the upload worked!
     req.body.awsurl = path.join(
@@ -344,7 +285,6 @@ app.post("/api/image", uploader.single("photo"), s3.upload, (req, res) => {
         // console.log("req.file: ", req.file);
         db.insertImage(req.body.awsurl, req.session.userid)
             .then((result) => {
-                console.log("result: ", result);
                 req.session.first = result.rows[0].first;
                 req.session.last = result.rows[0].last;
                 req.session.url = result.rows[0].url;
@@ -378,13 +318,50 @@ server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
+const onlineUser = {};
+
 io.on("connection", (socket) => {
     if (!socket.request.session.userid) {
         console.log("no userId");
         return socket.disconnect(true);
     }
-
     const userId = socket.request.session.userid;
+    console.log("onlineUser before: ", onlineUser);
+    console.log(onlineUser.hasOwnProperty(userId));
+    if (onlineUser.hasOwnProperty(userId)) {
+        onlineUser[userId].push(socket.id);
+    } else {
+        onlineUser[userId] = [socket.id];
+    }
+
+    // let userAlreadyOnline = false;
+    // onlineUser.map((user) => {
+    //     if (user === userId) {
+    //         console.log("user: ", user);
+    //         console.log("userId: ", userId);
+    //         userAlreadyOnline = true;
+    //         return;
+    //     }
+    // });
+    // if (!userAlreadyOnline) {
+    //     onlineUser.push(userId);
+    // }
+
+    console.log("onlineUser after: ", onlineUser);
+
+    // if (!onlineUser.indexOf(userId)) {
+    //     onlineUser.push(userId);
+    //     console.log("onlineUser: ", onlineUser);
+    // }
+
+    // db.insertOnlineUser(userId).then(() => {
+    //     db.getOnlineUser().then((onlineReturn) => {
+    //         console.log("onlineReturn.rows: ", onlineReturn.rows);
+    //         const onlineUser = onlineReturn.rows;
+    //         console.log("onlineUser: ", onlineUser);
+    //     });
+    // });
+
     console.log(
         `User with id: ${userId} and socket id ${socket.id}, just connected!`
     );
@@ -392,18 +369,14 @@ io.on("connection", (socket) => {
     console.log("get recent chat messages");
     db.getChatMessages()
         .then((result) => {
-            console.log("result.rows: ", result.rows);
-            // res.json(result.rows);
             socket.emit("last-10-messages", result.rows);
         })
         .catch((err) => console.log("err in getEverything: ", err));
 
     socket.on("new-message", ({ messageText }) => {
-        console.log("new-message", messageText);
         let newMessageObj = {};
         db.insertChatMessage(userId, messageText)
             .then((messageReturn) => {
-                console.log("messageReturn.rows[0]: ", messageReturn.rows[0]);
                 newMessageObj = {
                     id: messageReturn.rows[0].id,
                     user_id: userId,
@@ -413,13 +386,29 @@ io.on("connection", (socket) => {
             })
             .then(() => {
                 db.getUserInfo(userId).then((userReturn) => {
-                    console.log("userReturn.rows[0]: ", userReturn.rows[0]);
                     newMessageObj.first = userReturn.rows[0].first;
                     newMessageObj.last = userReturn.rows[0].last;
                     newMessageObj.url = userReturn.rows[0].url;
-                    console.log("newMessageObj vor emit: ", newMessageObj);
+
                     io.emit("add-new-message", newMessageObj);
                 });
             });
+    });
+
+    socket.on("disconnect", () => {
+        console.log("onlineUser[userId]: ", onlineUser[userId]);
+        console.log("socket.id: ", socket.id);
+        console.log(onlineUser[userId].indexOf(socket.id));
+        console.log("userId.toString(): ", userId.toString());
+
+        if (onlineUser[userId].length <= 1) {
+            delete onlineUser[userId];
+        } else {
+            onlineUser[userId].splice(onlineUser[userId].indexOf(socket.id));
+        }
+        console.log(
+            `User with id: ${userId} and socket id ${socket.id}, just disconnected!`
+        );
+        console.log("onlineUser after disconnect: ", onlineUser);
     });
 });

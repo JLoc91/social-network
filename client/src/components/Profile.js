@@ -11,12 +11,12 @@ export default function Profile({
     changeBio,
 }) {
     // export default function Profile() {
-    console.log("togglePopup: ", togglePopup);
-    console.log("url: ", url);
-    console.log("first: ", first);
-    console.log("last: ", last);
-    console.log("bio: ", bio);
-    console.log("Profile!");
+    // console.log("togglePopup: ", togglePopup);
+    // console.log("url: ", url);
+    // console.log("first: ", first);
+    // console.log("last: ", last);
+    // console.log("bio: ", bio);
+    // console.log("Profile!");
     return (
         <>
             <ProfilePic

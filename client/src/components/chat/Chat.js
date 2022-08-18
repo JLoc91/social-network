@@ -7,7 +7,7 @@ import ChatBoard from "./ChatBoard";
 export default function Chat() {
 
     const chatMessages = useSelector((state) => state.messageList);
-    console.log("messages in Chat: ", chatMessages);
+
 
     // useEffect(() => {
     //     (async () => {

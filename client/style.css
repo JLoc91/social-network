@@ -219,7 +219,7 @@ img {
     flex-direction: column;
     border: 2px black dotted;
     width: 50vw;
-    height: 40vh;
+    height: 60vh;
 }
 
 .chatBoard {
@@ -227,7 +227,7 @@ img {
     flex-direction: column;
     border: 2px red dotted;
     width: 50vw;
-    height: 30vh;
+    height: 50vh;
     overflow-y: scroll;
 }
 .chatMessages {
@@ -247,4 +247,9 @@ img {
     min-height: 2rem;
     max-height: 5rem;
     border: 1px red solid;
+}
+
+textarea {
+    width: 50vw;
+    height: 10vh;
 }

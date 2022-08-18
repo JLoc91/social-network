@@ -12,10 +12,10 @@ export default class Uploader extends Component {
 
     onImageFormSubmit(e) {
         e.preventDefault();
-        console.log("try to submit Image form");
+     
         const form = e.currentTarget;
         const fileInput = form.querySelector("input[type=file]");
-        console.log("fileInput.files: ", fileInput.files);
+      
 
         if (fileInput.files.length < 1) {
             alert("You must add a file!");
@@ -23,7 +23,7 @@ export default class Uploader extends Component {
         }
 
         const formData = new FormData(form);
-        console.log("formData: ", formData);
+      
         fetch("/api/image", {
             method: "post",
             // headers: {
@@ -33,7 +33,7 @@ export default class Uploader extends Component {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("data: ", data);
+          
                 this.props.changeUrl(data.url, data.first, data.last, data.bio);
                 this.props.togglePopup();
             })

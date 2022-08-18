@@ -6,17 +6,20 @@ export default function ChatInput() {
 
     const sendMessage = () => {
         const message = textareaRef.current.value;
-        console.log("message: ", message);
-        socket.emit("new-message", {
-            messageText: message,
-        });
+  
+        if (message == "") {
+            alert("Message must not be empty");
+        } else {
+            socket.emit("new-message", {
+                messageText: message,
+            });
 
-        textareaRef.current.value = "";
-        textareaRef.current.focus();
+            textareaRef.current.value = "";
+            textareaRef.current.focus();
+        }
     };
 
     const onChange = (e) => {
-        console.log("e.keyCode: ", e.keyCode);
         if (e.keyCode == 13 && !e.shiftKey) {
             sendMessage();
         }

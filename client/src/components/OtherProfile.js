@@ -8,7 +8,7 @@ export default function OtherProfile() {
     const [first, setFirst] = useState("");
     const [last, setLast] = useState("");
     const [url, setUrl] = useState("");
-    console.log("userId: ", userId);
+    // console.log("userId: ", userId);
     fetch(`/api/userData/${userId}`)
         .then((response) => response.json())
         .then((data) => {
@@ -16,8 +16,8 @@ export default function OtherProfile() {
             // if (data.sameUser) {
             //     location.href("/");
             // }
-            console.log("data: ", data);
-            console.log("data.bio: ", data.bio);
+            // console.log("data: ", data);
+            // console.log("data.bio: ", data.bio);
             setBio(data.bio);
             setFirst(data.first);
             setLast(data.last);

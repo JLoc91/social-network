@@ -27,7 +27,7 @@ export default class BioEditor extends Component {
         const bioData = {
             draftBio: this.state.draftBio,
         };
-        console.log("bioData in FetchNewBioToServer: ", bioData);
+        // console.log("bioData in FetchNewBioToServer: ", bioData);
         fetch("/api/addBio", {
             method: "post",
             headers: {
@@ -37,15 +37,15 @@ export default class BioEditor extends Component {
         })
             .then((response) => response.json())
             .then((id) => {
-                console.log(
-                    "this.state.draftBio after updating DB: ",
-                    this.state.draftBio
-                );
-                console.log(
-                    "this.props.bio after updating DB: ",
-                    this.props.bio
-                );
-                console.log("id at client from server: ", id);
+                // console.log(
+                //     "this.state.draftBio after updating DB: ",
+                //     this.state.draftBio
+                // );
+                // console.log(
+                //     "this.props.bio after updating DB: ",
+                //     this.props.bio
+                // );
+                // console.log("id at client from server: ", id);
                 this.props.changeBio(this.state.draftBio);
                 // location.href = "/";
             })
@@ -56,12 +56,12 @@ export default class BioEditor extends Component {
 
     onTextAreaInputChange(e) {
         const target = e.currentTarget;
-        console.log("target.value: ", target.value);
+        // console.log("target.value: ", target.value);
 
         this.setState({
             draftBio: target.value,
         });
-        console.log("this.state.draftBio: ", this.state.draftBio);
+        // console.log("this.state.draftBio: ", this.state.draftBio);
     }
 
     changeBioInBioEditor(e) {
@@ -73,10 +73,6 @@ export default class BioEditor extends Component {
     render() {
         // this.setState({ draftBio: this.props.bio });
         if (this.state.isEditorVisible) {
-            console.log(
-                "this.state.isEditorVisible: ",
-                this.state.isEditorVisible
-            );
             return (
                 <>
                     <textarea
@@ -92,12 +88,7 @@ export default class BioEditor extends Component {
                 </>
             );
         } else {
-            console.log(
-                "this.state.isEditorVisible: ",
-                this.state.isEditorVisible
-            );
             if (this.props.bio) {
-                console.log("this.props.bio: ", this.props.bio);
                 return (
                     <>
                         <p className="bioText">{this.props.bio}</p>
@@ -107,7 +98,6 @@ export default class BioEditor extends Component {
                     </>
                 );
             } else {
-                console.log("this.props.bio: ", this.props.bio);
                 return <button onClick={this.showEditor}>Add</button>;
             }
         }

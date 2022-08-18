@@ -3,10 +3,10 @@ import { useState, Link, useEffect } from "react";
 
 export default function FriendButton(userId) {
     const [friendshipData, setFriendshipData] = useState({});
-    console.log("userId in FriendButton: ", userId);
+    // console.log("userId in FriendButton: ", userId);
     const userid = userId.userId;
-    console.log("userid in FriendButton: ", userid);
-    console.log("render friendButton");
+    // console.log("userid in FriendButton: ", userid);
+    // console.log("render friendButton");
     useEffect(() => {
         fetch(`/api/getFriendship/${userid}`)
             .then((response) => response.json())
@@ -16,13 +16,13 @@ export default function FriendButton(userId) {
                 //     location.href("/");
                 // }
                 setFriendshipData(friendshipDataBack);
-                console.log("friendshipData: ", friendshipData);
+                // console.log("friendshipData: ", friendshipData);
             });
     }, []);
 
     function sendFriendRequest(data) {
-        console.log("ready to send a friend Request");
-        console.log("data in sendFriendRequest: ", data);
+        // console.log("ready to send a friend Request");
+        // console.log("data in sendFriendRequest: ", data);
         fetch(`/api/addFriendship/${userid}`, {
             method: "post",
             headers: {
@@ -32,15 +32,15 @@ export default function FriendButton(userId) {
         })
             .then((response) => response.json())
             .then((addResponse) => {
-                console.log("addResponse: ", addResponse);
+                // console.log("addResponse: ", addResponse);
                 setFriendshipData(addResponse);
             })
             .catch((err) => console.log("err in addFriendship fetch: ", err));
     }
 
     function acceptFriendRequest(data) {
-        console.log("ready to accept a friend Request");
-        console.log("data in acceptFriendRequest: ", data);
+        // console.log("ready to accept a friend Request");
+        // console.log("data in acceptFriendRequest: ", data);
         fetch(`/api/acceptFriendship/${userid}`, {
             method: "post",
             headers: {
@@ -50,7 +50,7 @@ export default function FriendButton(userId) {
         })
             .then((response) => response.json())
             .then((acceptResponse) => {
-                console.log("acceptResponse: ", acceptResponse);
+                // console.log("acceptResponse: ", acceptResponse);
                 setFriendshipData(acceptResponse);
             })
             .catch((err) =>
@@ -59,8 +59,8 @@ export default function FriendButton(userId) {
     }
 
     function deleteFriendship(data) {
-        console.log("ready to delete friendship");
-        console.log("data in deleteFriendship: ", data);
+        // console.log("ready to delete friendship");
+        // console.log("data in deleteFriendship: ", data);
         fetch(`/api/deleteFriendship/${userid}`, {
             method: "post",
             headers: {
@@ -70,7 +70,7 @@ export default function FriendButton(userId) {
         })
             .then((response) => response.json())
             .then((deleteResponse) => {
-                console.log("deleteResponse: ", deleteResponse);
+                // console.log("deleteResponse: ", deleteResponse);
                 if (deleteResponse.id) {
                     console.log("friendship still exists");
                 } else {
@@ -83,8 +83,8 @@ export default function FriendButton(userId) {
             );
     }
 
-    console.log("friendshipData before render: ", friendshipData);
-    console.log("friendshipData: ", friendshipData);
+    // console.log("friendshipData before render: ", friendshipData);
+    // console.log("friendshipData: ", friendshipData);
 
     if (!friendshipData.id) {
         return (
@@ -102,7 +102,7 @@ export default function FriendButton(userId) {
                 </button>
             );
         } else {
-            console.log("friendshipData.myRequest: ", friendshipData.myRequest);
+            // console.log("friendshipData.myRequest: ", friendshipData.myRequest);
             if (friendshipData.myRequest) {
                 return (
                     <button onClick={() => deleteFriendship(friendshipData)}>
@@ -128,5 +128,4 @@ export default function FriendButton(userId) {
             }
         }
     }
-    // return <button>Cancel</button>;
 }
