@@ -1,16 +1,14 @@
 import { useRef } from "react";
 import { socket } from "../../socket";
-import { useSelector, useDispatch } from "react-redux";
-import { receiveChatMessages } from "../../redux/Messages/slice";
 
 export default function ChatInput() {
     const textareaRef = useRef();
 
     const sendMessage = () => {
         const message = textareaRef.current.value;
+        console.log("message: ", message);
         socket.emit("new-message", {
-            username: "username",
-            text: message,
+            messageText: message,
         });
 
         textareaRef.current.value = "";
@@ -18,6 +16,7 @@ export default function ChatInput() {
     };
 
     const onChange = (e) => {
+        console.log("e.keyCode: ", e.keyCode);
         if (e.keyCode == 13 && !e.shiftKey) {
             sendMessage();
         }

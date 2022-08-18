@@ -127,16 +127,6 @@ app.get("/api/findPeoples", (req, res) => {
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
-app.get("/api/getChatMessages", (req, res) => {
-    console.log("get recent chat messages");
-    db.getChatMessages()
-        .then((result) => {
-            console.log("result.rows: ", result.rows);
-            res.json(result.rows);
-        })
-        .catch((err) => console.log("err in getEverything: ", err));
-});
-
 app.get("/api/findPeople/:word", (req, res) => {
     console.log("get recent users");
     console.log("req.params.word: ", req.params.word);
@@ -389,18 +379,47 @@ server.listen(process.env.PORT || 3001, function () {
 });
 
 io.on("connection", (socket) => {
-    if (!socket.request.session.userId) {
+    if (!socket.request.session.userid) {
         console.log("no userId");
         return socket.disconnect(true);
     }
 
-    console.log(`Socket with id: ${socket.id} has connected`);
+    const userId = socket.request.session.userid;
+    console.log(
+        `User with id: ${userId} and socket id ${socket.id}, just connected!`
+    );
 
-    socket.emit("hello", {
-        cohort: "Buckwheat",
-    });
+    console.log("get recent chat messages");
+    db.getChatMessages()
+        .then((result) => {
+            console.log("result.rows: ", result.rows);
+            // res.json(result.rows);
+            socket.emit("last-10-messages", result.rows);
+        })
+        .catch((err) => console.log("err in getEverything: ", err));
 
-    socket.on("cool people", (data) => {
-        console.log("data incoming from client: ", data);
+    socket.on("new-message", ({ messageText }) => {
+        console.log("new-message", messageText);
+        let newMessageObj = {};
+        db.insertChatMessage(userId, messageText)
+            .then((messageReturn) => {
+                console.log("messageReturn.rows[0]: ", messageReturn.rows[0]);
+                newMessageObj = {
+                    id: messageReturn.rows[0].id,
+                    user_id: userId,
+                    message: messageText,
+                    timestamp: messageReturn.rows[0].timestamp,
+                };
+            })
+            .then(() => {
+                db.getUserInfo(userId).then((userReturn) => {
+                    console.log("userReturn.rows[0]: ", userReturn.rows[0]);
+                    newMessageObj.first = userReturn.rows[0].first;
+                    newMessageObj.last = userReturn.rows[0].last;
+                    newMessageObj.url = userReturn.rows[0].url;
+                    console.log("newMessageObj vor emit: ", newMessageObj);
+                    io.emit("add-new-message", newMessageObj);
+                });
+            });
     });
 });

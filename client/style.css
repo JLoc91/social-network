@@ -228,18 +228,19 @@ img {
     border: 2px red dotted;
     width: 50vw;
     height: 30vh;
+    overflow-y: scroll;
 }
 .chatMessages {
-display: flex;
+    display: flex;
     flex-direction: column;
 }
 
 .chatMessage {
-display: flex;
+    display: flex;
     flex-direction: row;
 }
 .messagePic img {
-        width: 7vw;
+    width: 7vw;
     min-width: 2rem;
     max-width: 5rem;
     height: 7vw;

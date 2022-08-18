@@ -1,10 +1,23 @@
-export default function messages(messages = {}, action) {
+export default function messages(messages = [], action) {
     console.log("messages STEP7: ", messages);
     if (action.type === "chat-messages/received") {
         messages = action.payload;
         console.log("messages STEP7 after: ", messages);
     }
 
+    if (action.type === "chat-messages/send") {
+        console.log("Array.isArray(messages): ", Array.isArray(messages));
+        console.log(
+            "Array.isArray([...messages]): ",
+            Array.isArray([...messages])
+        );
+        console.log(
+            "Array.isArray(action.payload): ",
+            Array.isArray(action.payload)
+        );
+        messages = [...messages, action.payload];
+        
+    }
     console.log("messages after action: ", messages);
     return messages;
 }

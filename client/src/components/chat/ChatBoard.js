@@ -3,7 +3,11 @@ import ChatMessage from "./ChatMessage";
 export default function ChatBoard(chatMessages) {
     console.log("messages in ChatBoard: ", chatMessages);
     const chatMessagesArray = chatMessages.messages;
-    // if (!chatMessages) {
+    console.log(
+        "Array.isArray(chatMessagesArray): ",
+        Array.isArray(chatMessagesArray)
+    );
+    // if (!chatMessagesArray) {
     //     return null;
     // }
 

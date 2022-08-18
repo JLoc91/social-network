@@ -235,3 +235,17 @@ module.exports.getChatMessages = () => {
     `;
     return db.query(query);
 };
+
+module.exports.insertChatMessage = (userId, message) => {
+    const query = `
+    INSERT INTO ${tableChatMessages} (user_id, message) values ($1, $2) returning id, timestamp
+    `;
+    return db.query(query, [userId, message]);
+};
+
+module.exports.getUserInfo = (userId) => {
+    const query = `
+    select first, last, url from ${tableUser} where id=$1
+    `;
+    return db.query(query, [userId]);
+};
