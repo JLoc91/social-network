@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { receiveChatMessages } from "../../redux/Messages/slice";
 import ChatInput from "./ChatInput";
 import ChatBoard from "./ChatBoard";
+import OnlinePeople from "./OnlinePeople";
 
 export default function Chat() {
 
@@ -24,6 +25,7 @@ export default function Chat() {
 
     return (
         <div className="chat">
+            <OnlinePeople />
             <h1>Chat works</h1>
             <ChatBoard messages={chatMessages} />
             <ChatInput />

@@ -2,6 +2,7 @@
 
 import { io } from "socket.io-client";
 import { receiveChatMessages, sendMessage } from "./redux/Messages/slice";
+import { updateOnlinePeople } from "./redux/OnlinePeople/slice";
 
 export let socket;
 
@@ -18,6 +19,11 @@ export const init = (store) => {
 
         socket.on("add-new-message", (message) => {
             store.dispatch(sendMessage(message));
+        });
+
+        socket.on("update-online-people", (onlinePeople) => {
+            console.log("onlinePeople in spcket.js: ", onlinePeople);
+            store.dispatch(updateOnlinePeople(onlinePeople));
         });
     }
 };

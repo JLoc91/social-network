@@ -10,7 +10,11 @@ export default function messages(messages = [], action) {
         messages = [...messages, action.payload];
         
     }
- 
+
+    if (action.type === "online-people/update") {
+        
+    }
+    
     return messages;
 }
 
@@ -27,5 +31,12 @@ export function sendMessage(chatMessage) {
     return {
         type: "chat-messages/send",
         payload: chatMessage,
+    };
+}
+
+export function updateOnlinePeople(onlinePeople) {
+    return {
+        type: "online-people/update",
+        payload: onlinePeople,
     };
 }

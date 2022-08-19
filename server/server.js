@@ -348,7 +348,7 @@ io.on("connection", (socket) => {
     // }
 
     console.log("onlineUser after: ", onlineUser);
-
+    io.emit("update-online-people", onlineUser);
     // if (!onlineUser.indexOf(userId)) {
     //     onlineUser.push(userId);
     //     console.log("onlineUser: ", onlineUser);
@@ -410,5 +410,6 @@ io.on("connection", (socket) => {
             `User with id: ${userId} and socket id ${socket.id}, just disconnected!`
         );
         console.log("onlineUser after disconnect: ", onlineUser);
+        io.emit("update-online-people", onlineUser);
     });
 });
