@@ -255,3 +255,24 @@ module.exports.getOnlineUserInfo = (onlineUserArray) => {
     const params = [onlineUserArray];
     return db.query(query, params);
 };
+
+module.exports.deleteUser = (id) => {
+    const query = `
+    DELETE FROM ${tableUser} WHERE id=$1
+    `;
+    return db.query(query, [id]);
+};
+
+module.exports.deleteUserMessages = (id) => {
+    const query = `
+    DELETE FROM ${tableChatMessages} WHERE user_id=$1
+    `;
+    return db.query(query, [id]);
+};
+
+module.exports.deleteUserFriendships = (id) => {
+    const query = `
+    DELETE FROM ${tableFriendships} WHERE sender_id=$1 or recipient_id=$1
+    `;
+    return db.query(query, [id]);
+};

@@ -111,6 +111,37 @@ app.get("/api/findPeople/:word", (req, res) => {
         .catch((err) => console.log("err in getEverything: ", err));
 });
 
+app.get("/api/deleteUser", (req, res) => {
+    db.deleteUserFriendships(req.session.userid)
+        .then((friendshipDeleteResult) => {
+            console.log(
+                "friendshipDeleteResult.rows: ",
+                friendshipDeleteResult.rows
+            );
+            db.deleteUserMessages(req.session.userid).then(
+                (messagesDeleteResult) => {
+                    console.log(
+                        "messagesDeleteResult.rows: ",
+                        messagesDeleteResult.rows
+                    );
+                    db.deleteUser(req.session.userid).then(
+                        (userDeleteResult) => {
+                            console.log(
+                                "userDeleteResult.rows: ",
+                                userDeleteResult.rows
+                            );
+
+                            res.redirect("/api/logout");
+                            res.json();
+                        }
+                    );
+                }
+            );
+            // res.json(result.rows);
+        })
+        .catch((err) => console.log("err in getEverything: ", err));
+});
+
 app.get("/api/logout", (req, res) => {
     console.log("user logged out");
     req.session = undefined;
@@ -142,7 +173,10 @@ app.post("/api/register", (req, res) => {
                 userid: req.session.userid,
             });
         })
-        .catch((err) => console.log("err in insertUser: ", err));
+        .catch((err) => {
+            console.log("err in insertUser: ", err);
+            res.redirect("/");
+        });
 });
 
 app.post(

@@ -8,6 +8,7 @@ import FindPeople from "./FindPeople";
 import Friends from "./Friends";
 import Chat from "./chat/Chat";
 import LogOutButton from "./LogOutButton";
+import DeleteButton from "./DeleteButton";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 export default class App extends Component {
@@ -74,11 +75,23 @@ export default class App extends Component {
                                 />
 
                                 {this.state.isPopupOpen && (
-                                    <Uploader
-                                        url={this.state.url}
-                                        togglePopup={this.togglePopup}
-                                        changeUrl={this.changeUrl}
-                                    />
+                                    <>
+                                        <div id="transparentCover">
+                                            <div
+                                                id="popUp"
+                                                className="imagebox shadow"
+                                            >
+                                                <DeleteButton />
+                                                <Uploader
+                                                    url={this.state.url}
+                                                    togglePopup={
+                                                        this.togglePopup
+                                                    }
+                                                    changeUrl={this.changeUrl}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
                                 )}
                             </div>
                             <div className="profileBody">
@@ -109,11 +122,23 @@ export default class App extends Component {
                                     bio={this.state.bio}
                                 />
                                 {this.state.isPopupOpen && (
-                                    <Uploader
-                                        url={this.state.url}
-                                        togglePopup={this.togglePopup}
-                                        changeUrl={this.changeUrl}
-                                    />
+                                    <>
+                                        <div id="transparentCover">
+                                            <div
+                                                id="popUp"
+                                                className="imagebox shadow"
+                                            >
+                                                <DeleteButton />
+                                                <Uploader
+                                                    url={this.state.url}
+                                                    togglePopup={
+                                                        this.togglePopup
+                                                    }
+                                                    changeUrl={this.changeUrl}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
                                 )}
                             </div>
                             <div className="profileBody">
@@ -136,11 +161,23 @@ export default class App extends Component {
                                     bio={this.state.bio}
                                 />
                                 {this.state.isPopupOpen && (
-                                    <Uploader
-                                        url={this.state.url}
-                                        togglePopup={this.togglePopup}
-                                        changeUrl={this.changeUrl}
-                                    />
+                                    <>
+                                        <div id="transparentCover">
+                                            <div
+                                                id="popUp"
+                                                className="imagebox shadow"
+                                            >
+                                                <DeleteButton />
+                                                <Uploader
+                                                    url={this.state.url}
+                                                    togglePopup={
+                                                        this.togglePopup
+                                                    }
+                                                    changeUrl={this.changeUrl}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
                                 )}
                             </div>
                             <div className="profileBody">
@@ -162,11 +199,23 @@ export default class App extends Component {
                                     bio={this.state.bio}
                                 />
                                 {this.state.isPopupOpen && (
-                                    <Uploader
-                                        url={this.state.url}
-                                        togglePopup={this.togglePopup}
-                                        changeUrl={this.changeUrl}
-                                    />
+                                    <>
+                                        <div id="transparentCover">
+                                            <div
+                                                id="popUp"
+                                                className="imagebox shadow"
+                                            >
+                                                <DeleteButton />
+                                                <Uploader
+                                                    url={this.state.url}
+                                                    togglePopup={
+                                                        this.togglePopup
+                                                    }
+                                                    changeUrl={this.changeUrl}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
                                 )}
                             </div>
                             <div className="profileBody">
@@ -187,11 +236,23 @@ export default class App extends Component {
                                     bio={this.state.bio}
                                 />
                                 {this.state.isPopupOpen && (
-                                    <Uploader
-                                        url={this.state.url}
-                                        togglePopup={this.togglePopup}
-                                        changeUrl={this.changeUrl}
-                                    />
+                                    <>
+                                        <div id="transparentCover">
+                                            <div
+                                                id="popUp"
+                                                className="imagebox shadow"
+                                            >
+                                                <DeleteButton />
+                                                <Uploader
+                                                    url={this.state.url}
+                                                    togglePopup={
+                                                        this.togglePopup
+                                                    }
+                                                    changeUrl={this.changeUrl}
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
                                 )}
                             </div>
                             <div className="profileBody">

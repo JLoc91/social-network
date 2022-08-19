@@ -25,7 +25,10 @@ export default function OnlinePeople() {
                             <div key={user} className="onlineUser">
                                 <img
                                     className="small"
-                                    src={userInfoObj[user].url}
+                                    src={
+                                        userInfoObj[user].url ||
+                                        "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
+                                    }
                                     alt={userInfoObj[user].first}
                                     onClick={() =>
                                         (location.href = `/user/${user}`)
