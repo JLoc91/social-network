@@ -118,22 +118,28 @@ app.get("/api/deleteUser", (req, res) => {
                 "friendshipDeleteResult.rows: ",
                 friendshipDeleteResult.rows
             );
+
             db.deleteUserMessages(req.session.userid).then(
                 (messagesDeleteResult) => {
                     console.log(
                         "messagesDeleteResult.rows: ",
                         messagesDeleteResult.rows
                     );
-                    db.deleteUser(req.session.userid).then(
-                        (userDeleteResult) => {
+                    db.deleteUser(req.session.userid)
+                        .then((userDeleteResult) => {
                             console.log(
                                 "userDeleteResult.rows: ",
                                 userDeleteResult.rows
                             );
+                            if (userDeleteResult.rows[0].url != null) {
+                               
+                                s3.deletePicAWS(userDeleteResult.rows[0].url);
+                            }
+                        })
+                        .then(() => {
                             req.session = undefined;
                             res.redirect("/login");
-                        }
-                    );
+                        });
                 }
             );
             // res.json(result.rows);

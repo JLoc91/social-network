@@ -259,7 +259,7 @@ module.exports.getOnlineUserInfo = (onlineUserArray) => {
 module.exports.deleteUser = (id) => {
     const query = `
     DELETE FROM ${tableUser} WHERE id=$1
-    `;
+    returning url`;
     return db.query(query, [id]);
 };
 
