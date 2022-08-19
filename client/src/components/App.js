@@ -7,6 +7,7 @@ import Uploader from "./Uploader";
 import FindPeople from "./FindPeople";
 import Friends from "./Friends";
 import Chat from "./chat/Chat";
+import LogOutButton from "./LogOutButton";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
 export default class App extends Component {
@@ -63,6 +64,7 @@ export default class App extends Component {
                                 <Link to="/users">Look for new People!</Link>
                                 <Link to="/friends">Friends</Link>
                                 <Link to="/chat">Chat</Link>
+                                <LogOutButton />
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}

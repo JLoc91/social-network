@@ -1,17 +1,38 @@
 import { useSelector } from "react-redux";
 
 export default function OnlinePeople() {
-    const onlinePeople = useSelector((state) => state.onlinePeopleList);
+    const onlinePeople = useSelector(
+        (state) => state.onlinePeopleList.onlineUser
+    );
+    const userInfo = useSelector((state) => state.onlinePeopleList.userInfo);
     console.log("onlinePeople in onlinePeople component: ", onlinePeople);
+    console.log("userInfo in onlinePeople component: ", userInfo);
+    const userInfoObj = {};
+    userInfo.map((obj) => {
+        userInfoObj[obj.id] = obj;
+    });
+
+    console.log("userInfoObj in onlinePeople component: ", userInfoObj);
     const onlinePeopleArray = Object.keys(onlinePeople);
 
     return (
         <>
-            <div className="onlinePeople">
+            <div className="onlineUserBox">
                 <p>These People are currently online</p>
-                <div>
+                <div className="onlinePeople">
                     {onlinePeopleArray.map((user) => {
-                        return <p key="{user}">{user}</p>;
+                        return (
+                            <div key={user} className="onlineUser">
+                                <img
+                                    className="small"
+                                    src={userInfoObj[user].url}
+                                    alt={userInfoObj[user].first}
+                                    onClick={() =>
+                                        (location.href = `/user/${user}`)
+                                    }
+                                ></img>
+                            </div>
+                        );
                     })}
                 </div>
             </div>

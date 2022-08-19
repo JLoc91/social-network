@@ -246,3 +246,12 @@ module.exports.setUserOffline = (id) => {
     `;
     return db.query(query, [id]);
 };
+
+module.exports.getOnlineUserInfo = (onlineUserArray) => {
+    const query = `
+    SELECT id, first, last, url
+    FROM users WHERE id = ANY($1)
+    `;
+    const params = [onlineUserArray];
+    return db.query(query, params);
+};

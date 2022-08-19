@@ -12,9 +12,9 @@ export default function onlinePeople(onlinePeople = {}, action) {
 
 //STEP 6
 
-export function updateOnlinePeople(onlinePeople) {
+export function updateOnlinePeople(onlinePeoplePackage) {
     return {
         type: "online-people/update",
-        payload: onlinePeople,
+        payload: onlinePeoplePackage,
     };
 }

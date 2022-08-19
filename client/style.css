@@ -253,3 +253,19 @@ textarea {
     width: 50vw;
     height: 10vh;
 }
+
+.small {
+    width: 3.5vw;
+    min-width: 1.5rem;
+    max-width: 3.5rem;
+    height: 3.5vw;
+    min-height: 1.5rem;
+    max-height: 3.5rem;
+    border-radius: 50%;
+}
+
+.onlinePeople {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}

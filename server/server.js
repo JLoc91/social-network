@@ -348,19 +348,20 @@ io.on("connection", (socket) => {
     // }
 
     console.log("onlineUser after: ", onlineUser);
-    io.emit("update-online-people", onlineUser);
+    let onlineUserArray = Object.keys(onlineUser);
+    db.getOnlineUserInfo(onlineUserArray).then((resultUserInfo) => {
+        console.log("resultUserInfo.rows: ", resultUserInfo.rows);
+        const onlineUsersPackage = {
+            onlineUser: onlineUser,
+            userInfo: resultUserInfo.rows,
+        };
+        console.log("onlineUsersPackage in server: ", onlineUsersPackage);
+        io.emit("update-online-people", onlineUsersPackage);
+    });
     // if (!onlineUser.indexOf(userId)) {
     //     onlineUser.push(userId);
     //     console.log("onlineUser: ", onlineUser);
     // }
-
-    // db.insertOnlineUser(userId).then(() => {
-    //     db.getOnlineUser().then((onlineReturn) => {
-    //         console.log("onlineReturn.rows: ", onlineReturn.rows);
-    //         const onlineUser = onlineReturn.rows;
-    //         console.log("onlineUser: ", onlineUser);
-    //     });
-    // });
 
     console.log(
         `User with id: ${userId} and socket id ${socket.id}, just connected!`
@@ -410,6 +411,16 @@ io.on("connection", (socket) => {
             `User with id: ${userId} and socket id ${socket.id}, just disconnected!`
         );
         console.log("onlineUser after disconnect: ", onlineUser);
-        io.emit("update-online-people", onlineUser);
+        let onlineUserArray = Object.keys(onlineUser);
+        db.getOnlineUserInfo(onlineUserArray).then((resultUserInfo) => {
+            console.log("resultUserInfo.rows: ", resultUserInfo.rows);
+            const onlineUsersPackage = {
+                onlineUser: onlineUser,
+                userInfo: resultUserInfo.rows,
+            };
+            console.log("onlineUsersPackage in server: ", onlineUsersPackage);
+            io.emit("update-online-people", onlineUsersPackage);
+        });
+        // io.emit("update-online-people", onlineUser);
     });
 });
