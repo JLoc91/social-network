@@ -132,7 +132,6 @@ app.get("/api/deleteUser", (req, res) => {
                                 userDeleteResult.rows
                             );
                             if (userDeleteResult.rows[0].url != null) {
-                               
                                 s3.deletePicAWS(userDeleteResult.rows[0].url);
                             }
                         })
@@ -323,24 +322,31 @@ app.post("/api/image", uploader.single("photo"), s3.upload, (req, res) => {
     );
     if (req.file) {
         // console.log("req.file: ", req.file);
-        db.insertImage(req.body.awsurl, req.session.userid)
-            .then((result) => {
-                req.session.first = result.rows[0].first;
-                req.session.last = result.rows[0].last;
-                req.session.url = result.rows[0].url;
-            })
-            .then(() => {
-                res.json({
-                    success: true,
-                    message: "File uploaded. Good job! 🚀",
-                    file: `/${req.file.filename}`,
-                    url: req.session.url,
-                    first: req.session.first,
-                    last: req.session.last,
-                });
-                // res.json({});
-            })
-            .catch((err) => console.log("err in insertImage: ", err));
+        db.getImage(req.session.userid).then((resultImage) => {
+            console.log("resultImage.rows[0]: ", resultImage.rows[0]);
+            const oldPicUrl = resultImage.rows[0].url;
+            db.insertImage(req.body.awsurl, req.session.userid)
+                .then((result) => {
+                    req.session.first = result.rows[0].first;
+                    req.session.last = result.rows[0].last;
+                    req.session.url = result.rows[0].url;
+                })
+                .then(() => {
+                    if (oldPicUrl != null) {
+                        s3.deletePicAWS(oldPicUrl);
+                    }
+                    res.json({
+                        success: true,
+                        message: "File uploaded. Good job! 🚀",
+                        file: `/${req.file.filename}`,
+                        url: req.session.url,
+                        first: req.session.first,
+                        last: req.session.last,
+                    });
+                    // res.json({});
+                })
+                .catch((err) => console.log("err in insertImage: ", err));
+        });
     } else {
         res.json({
             success: false,

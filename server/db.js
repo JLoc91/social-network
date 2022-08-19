@@ -147,6 +147,13 @@ module.exports.findPeople = (input) => {
     ]);
 };
 
+module.exports.getImage = (id) => {
+    const query = `
+    select url from ${tableUser} where id=$1
+    `;
+    return db.query(query, [id]);
+};
+
 module.exports.insertImage = (url, id) => {
     return db.query(
         `update ${tableUser} set url='${url}'

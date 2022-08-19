@@ -24,24 +24,22 @@ class Registration extends Component {
 
     onFormInputChange(e) {
         const target = e.currentTarget;
-     
 
         this.setState({
             [target.name]: target.value,
         });
-      
     }
 
     onFormSubmit(e) {
         e.preventDefault();
-      
+
         const userData = {
             first: this.state.first,
             last: this.state.last,
             email: this.state.email,
             password: this.state.password,
         };
- 
+
         fetch("/api/register", {
             method: "post",
             headers: {
@@ -68,7 +66,10 @@ class Registration extends Component {
                     location.href = "/";
                 }
             })
-            .catch((err) => console.log("err in registration fetch: ", err));
+            .catch((err) => {
+                console.log("err in registration fetch: ", err);
+                location.href = "/";
+            });
     }
 
     render() {
