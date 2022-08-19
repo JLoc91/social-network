@@ -224,7 +224,7 @@ img {
 
 .chatBoard {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     border: 2px red dotted;
     width: 50vw;
     height: 50vh;

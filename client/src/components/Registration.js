@@ -50,9 +50,23 @@ class Registration extends Component {
             body: JSON.stringify(userData),
         })
             .then((response) => response.json())
-            .then((id) => {
-             
-                location.reload();
+            // .then((id) => {
+
+            //     location.reload();
+            // })
+            .then((data) => {
+                // if (data.error) {
+                //     console.log("data.error: ", data.error);
+                // }
+
+                // console.log("data at client from server: ", data);
+                if (!data.userid) {
+                    console.log("stay at /register");
+                    throw console.error("Credentials not correct");
+                } else {
+                    console.log("move to / ");
+                    location.href = "/";
+                }
             })
             .catch((err) => console.log("err in registration fetch: ", err));
     }

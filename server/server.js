@@ -130,9 +130,8 @@ app.get("/api/deleteUser", (req, res) => {
                                 "userDeleteResult.rows: ",
                                 userDeleteResult.rows
                             );
-
-                            res.redirect("/api/logout");
-                            res.json();
+                            req.session = undefined;
+                            res.redirect("/login");
                         }
                     );
                 }
@@ -159,24 +158,25 @@ app.post("/api/register", (req, res) => {
         // res.redirect("/");
         // return;
         res.json({});
-    }
-    db.insertUser(
-        req.body.first,
-        req.body.last,
-        req.body.email,
-        req.body.password
-    )
-        .then((response) => {
-            const id = response.rows[0].id;
-            req.session.userid = id;
-            res.json({
-                userid: req.session.userid,
+    } else {
+        db.insertUser(
+            req.body.first,
+            req.body.last,
+            req.body.email,
+            req.body.password
+        )
+            .then((response) => {
+                const id = response.rows[0].id;
+                req.session.userid = id;
+                res.json({
+                    userid: req.session.userid,
+                });
+            })
+            .catch((err) => {
+                console.log("err in insertUser: ", err);
+                res.redirect("/");
             });
-        })
-        .catch((err) => {
-            console.log("err in insertUser: ", err);
-            res.redirect("/");
-        });
+    }
 });
 
 app.post(
@@ -368,19 +368,6 @@ io.on("connection", (socket) => {
         onlineUser[userId] = [socket.id];
     }
 
-    // let userAlreadyOnline = false;
-    // onlineUser.map((user) => {
-    //     if (user === userId) {
-    //         console.log("user: ", user);
-    //         console.log("userId: ", userId);
-    //         userAlreadyOnline = true;
-    //         return;
-    //     }
-    // });
-    // if (!userAlreadyOnline) {
-    //     onlineUser.push(userId);
-    // }
-
     console.log("onlineUser after: ", onlineUser);
     let onlineUserArray = Object.keys(onlineUser);
     db.getOnlineUserInfo(onlineUserArray).then((resultUserInfo) => {
@@ -433,7 +420,7 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         console.log("onlineUser[userId]: ", onlineUser[userId]);
         console.log("socket.id: ", socket.id);
-        console.log(onlineUser[userId].indexOf(socket.id));
+        // console.log(onlineUser[userId].indexOf(socket.id));
         console.log("userId.toString(): ", userId.toString());
 
         if (onlineUser[userId].length <= 1) {

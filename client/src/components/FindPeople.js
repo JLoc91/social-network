@@ -89,6 +89,7 @@ export default function FindPeople() {
                 {people.map((item) => (
                     // <li key={item.id}>
                     <>
+                        {console.log(item.id)}
                         <div key={item.id} className="profile">
                             <div className="profilePicContainer">
                                 <img
