@@ -66,6 +66,8 @@ export default class App extends Component {
                                 <Link to="/friends">Friends</Link>
                                 <Link to="/chat">Chat</Link>
                                 <LogOutButton />
+                                <DeleteButton />
+
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -81,7 +83,7 @@ export default class App extends Component {
                                                 id="popUp"
                                                 className="imagebox shadow"
                                             >
-                                                <DeleteButton />
+                                                {/* <DeleteButton /> */}
                                                 <Uploader
                                                     url={this.state.url}
                                                     togglePopup={
@@ -113,6 +115,9 @@ export default class App extends Component {
                                 <Link to="/">Back to Profile</Link>
                                 <Link to="/friends">Friends</Link>
                                 <Link to="/chat">Chat</Link>
+                                <LogOutButton />
+
+                                <DeleteButton />
 
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
@@ -128,7 +133,7 @@ export default class App extends Component {
                                                 id="popUp"
                                                 className="imagebox shadow"
                                             >
-                                                <DeleteButton />
+                                                {/* <DeleteButton /> */}
                                                 <Uploader
                                                     url={this.state.url}
                                                     togglePopup={
@@ -150,9 +155,12 @@ export default class App extends Component {
                                 <div className="logoApp">
                                     <Logo />
                                 </div>
+                                <Link to="/">Back to Profile</Link>
                                 <Link to="/users">Look for new People!</Link>
                                 <Link to="/friends">Friends</Link>
                                 <Link to="/chat">Chat</Link>
+                                <DeleteButton />
+
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -167,7 +175,7 @@ export default class App extends Component {
                                                 id="popUp"
                                                 className="imagebox shadow"
                                             >
-                                                <DeleteButton />
+                                                {/* <DeleteButton /> */}
                                                 <Uploader
                                                     url={this.state.url}
                                                     togglePopup={
@@ -189,8 +197,14 @@ export default class App extends Component {
                                 <div className="logoApp">
                                     <Logo />
                                 </div>
+
                                 <Link to="/users">Look for new People!</Link>
+                                <Link to="/">Back to Profile</Link>
                                 <Link to="/chat">Chat</Link>
+                                <LogOutButton />
+
+                                <DeleteButton />
+
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -205,7 +219,7 @@ export default class App extends Component {
                                                 id="popUp"
                                                 className="imagebox shadow"
                                             >
-                                                <DeleteButton />
+                                                {/* <DeleteButton /> */}
                                                 <Uploader
                                                     url={this.state.url}
                                                     togglePopup={
@@ -228,6 +242,11 @@ export default class App extends Component {
                                     <Logo />
                                 </div>
                                 <Link to="/users">Look for new People!</Link>
+                                <Link to="/friends">Friends</Link>
+                                <Link to="/">Back to Profile</Link>
+                                <LogOutButton />
+
+                                <DeleteButton />
                                 <ProfilePic
                                     togglePopup={this.togglePopup}
                                     url={this.state.url}
@@ -242,7 +261,7 @@ export default class App extends Component {
                                                 id="popUp"
                                                 className="imagebox shadow"
                                             >
-                                                <DeleteButton />
+                                                {/* <DeleteButton /> */}
                                                 <Uploader
                                                     url={this.state.url}
                                                     togglePopup={

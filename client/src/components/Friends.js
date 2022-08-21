@@ -84,7 +84,7 @@ export default function FriendsAndWannabes() {
         // const action = acceptFriend(id);
         // dispatch(action);
     };
-
+    
     return (
         <>
             <div id="friendscontainer">
@@ -99,6 +99,10 @@ export default function FriendsAndWannabes() {
                                         <img
                                             src={wannabe.url}
                                             alt={wannabe.first}
+                                            className="shadow"
+                                            onClick={() =>
+                                                (location.href = `/user/${wannabe.id}`)
+                                            }
                                         ></img>
                                     </div>
                                     <div className="nameAndButton">
@@ -136,6 +140,10 @@ export default function FriendsAndWannabes() {
                                         <img
                                             src={friend.url}
                                             alt={friend.first}
+                                            className="shadow"
+                                            onClick={() =>
+                                                (location.href = `/user/${friend.id}`)
+                                            }
                                         ></img>
                                     </div>
                                     <div className="nameAndButton">

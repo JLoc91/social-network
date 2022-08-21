@@ -15,7 +15,8 @@ class Welcome extends Component {
                 <br></br>
                 <BrowserRouter>
                     <div id="welcome-container">
-                        <h1>Welcome!</h1>
+                        <h2>Tired of Social Networks?</h2>
+                        <h2>Create your account below to support the movement against Social Networks!</h2>
                         <br></br>
                         <Route exact path="/">
                             <Registration />

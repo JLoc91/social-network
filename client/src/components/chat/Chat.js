@@ -10,8 +10,8 @@ export default function Chat() {
     return (
         <div className="chat">
             <OnlinePeople />
-            <h1>Chat works</h1>
             <ChatBoard messages={chatMessages} />
+            <br></br>
             <ChatInput />
         </div>
     );

@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     /* background-color: rgba(233, 240, 241, 0.85); */
+    background-color: rgb(103, 132, 120);
     font-family: sans-serif;
     max-width: 100%;
     /* color: white; */
@@ -16,6 +17,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+input,
+textarea,
+.chatBoard div {
+    background-color: white;
 }
 
 form#registration input,
@@ -41,8 +48,8 @@ img {
 }
 
 .logoApp img {
-    width: 18vw;
-    max-width: 12rem;
+    width: 13vw;
+    max-width: 8rem;
     min-width: 5rem;
     border-radius: 50%;
 }
@@ -54,9 +61,9 @@ img {
 }
 
 .logoWelcome img {
-    width: 24vw;
-    max-width: 18rem;
-    min-width: 5rem;
+    width: 21vw;
+    max-width: 14rem;
+    min-width: 7rem;
     border-radius: 50%;
 }
 
@@ -83,6 +90,15 @@ img {
     min-height: 4rem;
 }
 
+.profileHeader .profilePicContainer img {
+    width: 12vw;
+    max-width: 8rem;
+    min-width: 4rem;
+    height: 12vw;
+    max-height: 8rem;
+    min-height: 4rem;
+}
+
 .profileHeader img {
     margin-top: 1.5rem;
     margin-left: 2rem;
@@ -99,6 +115,7 @@ img {
 .profileHeader {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .profileBody {
@@ -111,6 +128,7 @@ img {
 
 #transparentCover {
     position: absolute;
+    transform: translateY(37vh);
     z-index: 1;
     width: 100vw;
     height: 100vh;
@@ -141,7 +159,7 @@ img {
 }
 
 #closeButton {
-    background-color: black;
+    /* background-color: black; */
     color: white;
     border: solid white 2px;
     width: fit-content;
@@ -155,7 +173,8 @@ img {
     margin-left: 2rem;
 }
 
-.profilePicContainer img {
+.profilePicContainer img,
+.otherProfilePicContainer img {
     border: 2px red solid;
     border-radius: 25%;
 }
@@ -167,6 +186,16 @@ img {
     height: 17vw;
     min-height: 5rem;
     max-height: 11rem;
+}
+
+.profileBody .otherProfilePicContainer img {
+    width: 10vw;
+    min-width: 5rem;
+    max-width: 7rem;
+    height: 10vw;
+    min-height: 5rem;
+    max-height: 7rem;
+    background-color: white;
 }
 
 .findPeople {
@@ -217,15 +246,30 @@ img {
 .chat {
     display: flex;
     flex-direction: column;
-    border: 2px black dotted;
+    border: 2px white solid;
+    border-radius: 12px;
     width: 50vw;
     height: 60vh;
+}
+
+.chat,
+.chat div,
+.chat h1,
+.chat p {
+    background-color: rgb(69, 120, 99);
+}
+
+div.chatMessage,
+div.chatMessage div,
+div.chatMessage p {
+    color: black;
+    background-color: white;
 }
 
 .chatBoard {
     display: flex;
     flex-direction: column-reverse;
-    border: 2px red dotted;
+    /* border: 2px red dotted; */
     width: 50vw;
     height: 50vh;
     overflow-y: scroll;
@@ -247,10 +291,11 @@ img {
     min-height: 2rem;
     max-height: 5rem;
     border: 1px red solid;
+    background-color: white;
 }
 
 textarea {
-    width: 50vw;
+    width: 40vw;
     height: 10vh;
 }
 
@@ -268,4 +313,31 @@ textarea {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
+}
+
+.profileHeader a:link,
+.profileHeader a:visited,
+.profileHeader a,
+.profileHeader p,
+button,
+#closeButton {
+    color: white;
+    text-decoration: none;
+    border: 2px white solid;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: rgb(69, 120, 99);
+}
+
+.chatInput,
+.onlineUserBox,
+.onlineUserBox p,
+.onlineUserBox div {
+    border-radius: 10px;
+    color: white;
+}
+
+#popUp h2 {
+    background-color: transparent;
+    color: white;
 }

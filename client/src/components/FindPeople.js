@@ -50,14 +50,14 @@ export default function FindPeople() {
                     // <li key={item.id}>
                     <>
                         <div key={item.id} className="profile">
-                            <div className="profilePicContainer">
+                            <div className="otherProfilePicContainer">
                                 <img
                                     src={
                                         item.url ||
                                         "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
                                     }
                                     alt={item.first}
-                                    className="findPeople"
+                                    className="findPeople shadow"
                                     onClick={() =>
                                         (location.href = `/user/${item.id}`)
                                     }
@@ -91,14 +91,14 @@ export default function FindPeople() {
                     <>
                         {console.log(item.id)}
                         <div key={item.id} className="profile">
-                            <div className="profilePicContainer">
+                            <div className="otherProfilePicContainer">
                                 <img
                                     src={
                                         item.url ||
                                         "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
                                     }
                                     alt={item.first}
-                                    className="findPeople"
+                                    className="findPeople shadow"
                                     onClick={() =>
                                         (location.href = `/user/${item.id}`)
                                     }

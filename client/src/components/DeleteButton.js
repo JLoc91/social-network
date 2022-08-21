@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function DeleteButton() {
     return (
-        <button
+        <p
             onClick={() => {
                 if (
                     confirm(
@@ -21,6 +21,6 @@ export default function DeleteButton() {
             }}
         >
             Delete Account
-        </button>
+        </p>
     );
 }
