@@ -22,7 +22,7 @@ export const init = (store) => {
         });
 
         socket.on("update-online-people", (onlinePeople) => {
-            console.log("onlinePeople in spcket.js: ", onlinePeople);
+            // console.log("onlinePeople in spcket.js: ", onlinePeople);
             store.dispatch(updateOnlinePeople(onlinePeople));
         });
     }

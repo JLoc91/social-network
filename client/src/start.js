@@ -20,7 +20,7 @@ const store = createStore(
 fetch("/api/user/id.json")
     .then((response) => response.json())
     .then((data) => {
-        console.log("data.user: ", data.user);
+        // console.log("data.user: ", data.user);
         if (!data.userid) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {

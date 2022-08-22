@@ -259,6 +259,11 @@ img {
     background-color: rgb(69, 120, 99);
 }
 
+/* h1,
+p.bioText {
+    color: white;
+} */
+
 div.chatMessage,
 div.chatMessage div,
 div.chatMessage p {
@@ -327,6 +332,7 @@ button,
     padding: 5px;
     border-radius: 10px;
     background-color: rgb(69, 120, 99);
+    cursor: pointer;
 }
 
 .chatInput,

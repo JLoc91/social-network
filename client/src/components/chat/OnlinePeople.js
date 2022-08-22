@@ -5,14 +5,14 @@ export default function OnlinePeople() {
         (state) => state.onlinePeopleList.onlineUser
     );
     const userInfo = useSelector((state) => state.onlinePeopleList.userInfo);
-    console.log("onlinePeople in onlinePeople component: ", onlinePeople);
-    console.log("userInfo in onlinePeople component: ", userInfo);
+    // console.log("onlinePeople in onlinePeople component: ", onlinePeople);
+    // console.log("userInfo in onlinePeople component: ", userInfo);
     const userInfoObj = {};
     userInfo.map((obj) => {
         userInfoObj[obj.id] = obj;
     });
 
-    console.log("userInfoObj in onlinePeople component: ", userInfoObj);
+    // console.log("userInfoObj in onlinePeople component: ", userInfoObj);
     const onlinePeopleArray = Object.keys(onlinePeople);
 
     return (
