@@ -114,23 +114,23 @@ app.get("/api/findPeople/:word", (req, res) => {
 app.get("/api/deleteUser", (req, res) => {
     db.deleteUserFriendships(req.session.userid)
         .then((friendshipDeleteResult) => {
-            console.log(
-                "friendshipDeleteResult.rows: ",
-                friendshipDeleteResult.rows
-            );
+            // console.log(
+            //     "friendshipDeleteResult.rows: ",
+            //     friendshipDeleteResult.rows
+            // );
 
             db.deleteUserMessages(req.session.userid).then(
                 (messagesDeleteResult) => {
-                    console.log(
-                        "messagesDeleteResult.rows: ",
-                        messagesDeleteResult.rows
-                    );
+                    // console.log(
+                    //     "messagesDeleteResult.rows: ",
+                    //     messagesDeleteResult.rows
+                    // );
                     db.deleteUser(req.session.userid)
                         .then((userDeleteResult) => {
-                            console.log(
-                                "userDeleteResult.rows: ",
-                                userDeleteResult.rows
-                            );
+                            // console.log(
+                            //     "userDeleteResult.rows: ",
+                            //     userDeleteResult.rows
+                            // );
                             if (userDeleteResult.rows[0].url != null) {
                                 s3.deletePicAWS(userDeleteResult.rows[0].url);
                             }
@@ -200,7 +200,7 @@ app.post(
                     if (resultObj.passwordCheck) {
                         req.session.userid = resultObj.userid;
 
-                        console.log("yay it worked");
+                        // console.log("yay it worked");
                         res.json({
                             userid: req.session.userid,
                         });
@@ -211,7 +211,9 @@ app.post(
                 })
                 .catch((err) => {
                     console.log("err in authenticate: ", err);
-                    res.redirect("/login");
+                    // res.redirect("/login");
+                    // res.json({err});
+                    res.json({});
                 });
         }
     }
@@ -264,7 +266,7 @@ app.post("/api/sendMessage", (req, res) => {
 
     db.insertMessage(req.body)
         .then((result) => {
-            console.log("sendMessage Rückgabe: ", result.rows);
+            // console.log("sendMessage Rückgabe: ", result.rows);
         })
         .catch((err) => console.log("err in insertMessage: ", err));
 });
@@ -373,7 +375,7 @@ io.on("connection", (socket) => {
     }
     const userId = socket.request.session.userid;
     console.log("onlineUser before: ", onlineUser);
-    console.log(onlineUser.hasOwnProperty(userId));
+    // console.log(onlineUser.hasOwnProperty(userId));
     if (onlineUser.hasOwnProperty(userId)) {
         onlineUser[userId].push(socket.id);
     } else {
@@ -383,12 +385,12 @@ io.on("connection", (socket) => {
     console.log("onlineUser after: ", onlineUser);
     let onlineUserArray = Object.keys(onlineUser);
     db.getOnlineUserInfo(onlineUserArray).then((resultUserInfo) => {
-        console.log("resultUserInfo.rows: ", resultUserInfo.rows);
+        // console.log("resultUserInfo.rows: ", resultUserInfo.rows);
         const onlineUsersPackage = {
             onlineUser: onlineUser,
             userInfo: resultUserInfo.rows,
         };
-        console.log("onlineUsersPackage in server: ", onlineUsersPackage);
+        // console.log("onlineUsersPackage in server: ", onlineUsersPackage);
         io.emit("update-online-people", onlineUsersPackage);
     });
     // if (!onlineUser.indexOf(userId)) {
@@ -400,7 +402,7 @@ io.on("connection", (socket) => {
         `User with id: ${userId} and socket id ${socket.id}, just connected!`
     );
 
-    console.log("get recent chat messages");
+    // console.log("get recent chat messages");
     db.getChatMessages()
         .then((result) => {
             socket.emit("last-10-messages", result.rows);
@@ -433,7 +435,7 @@ io.on("connection", (socket) => {
         console.log("onlineUser[userId]: ", onlineUser[userId]);
         console.log("socket.id: ", socket.id);
         // console.log(onlineUser[userId].indexOf(socket.id));
-        console.log("userId.toString(): ", userId.toString());
+        // console.log("userId.toString(): ", userId.toString());
 
         if (onlineUser[userId].length <= 1) {
             delete onlineUser[userId];

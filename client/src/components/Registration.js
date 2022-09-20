@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Registration extends Component {
     constructor() {
@@ -22,6 +22,7 @@ class Registration extends Component {
         this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
+    // function to 
     onFormInputChange(e) {
         const target = e.currentTarget;
 
@@ -59,10 +60,10 @@ class Registration extends Component {
 
                 // console.log("data at client from server: ", data);
                 if (!data.userid) {
-                    console.log("stay at /register");
+                    // console.log("stay at /register");
                     throw console.error("Credentials not correct");
                 } else {
-                    console.log("move to / ");
+                    // console.log("move to / ");
                     location.href = "/";
                 }
             })

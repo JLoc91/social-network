@@ -4,7 +4,7 @@ export default function Logo() {
     return (
         <>
             <img
-                className="loggedIn"
+                className="loggedIn shadow"
                 src="../antigram.png"
                 alt="antigram-logo"
             ></img>

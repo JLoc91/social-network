@@ -12,7 +12,7 @@ export const init = (store) => {
 
         socket.on("last-10-messages", (messages) => {
             // messages should be an array
-            console.log("got last 10 messages:", messages);
+            // console.log("got last 10 messages:", messages);
             //Step 5!
             store.dispatch(receiveChatMessages(messages));
         });

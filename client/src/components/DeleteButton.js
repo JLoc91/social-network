@@ -11,7 +11,6 @@ export default function DeleteButton() {
                 ) {
                     console.log("Try to delete account");
                     fetch(`api/deleteUser`).then(() => {
-                        console.log("wir sind wieder hier");
                         location.href = "/";
                     });
                 } else {

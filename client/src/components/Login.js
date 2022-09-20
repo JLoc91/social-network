@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
     constructor() {
@@ -11,6 +11,7 @@ class Login extends Component {
             password: "",
             code: "",
             isUserLoggedIn: false,
+            error: null,
             // error: {
             //     first: false,
             //     last: false,
@@ -49,7 +50,13 @@ class Login extends Component {
             },
             body: JSON.stringify(userData),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                // console.log(response);
+                if (!response.ok) {
+                    throw Error("error in fetch");
+                }
+                return response.json();
+            })
             .then((data) => {
                 // if (data.error) {
                 //     console.log("data.error: ", data.error);
@@ -57,16 +64,20 @@ class Login extends Component {
 
                 // console.log("data at client from server: ", data);
                 if (!data.userid) {
-                    console.log("stay at /login");
-                    throw console.error("Credentials not correct");
+                    // console.log("stay at /login");
+                    // throw console.error("Credentials not correct");
+                    throw Error("Credentials not correct");
                 } else {
-                    console.log("move to / ");
+                    this.setState({ error: null });
+                    // console.log("move to / ");
                     location.href = "/";
                 }
             })
             .catch((err) => {
+                this.setState({ error: err.message });
+                // console.log("this.state.error: ", this.state.error);
                 console.log("err in login fetch: ", err);
-                location.href = "/login";
+                // location.href = "/login";
             });
     }
 
@@ -74,6 +85,9 @@ class Login extends Component {
         return (
             <>
                 <span>Login Here!</span>
+                {this.state.error && (
+                    <div className="error">{this.state.error}</div>
+                )}
                 <br></br>
                 <form id="login" onSubmit={this.onFormSubmit}>
                     {/* <label htmlFor="email">Email: </label> */}

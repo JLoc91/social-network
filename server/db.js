@@ -24,7 +24,7 @@ function hashPassword(password) {
         .genSalt()
         .then((salt) => {
             const hash = bcrypt.hash(password, salt);
-            console.log("hash in function: ", hash);
+            // console.log("hash in function: ", hash);
             return hash;
         })
         .catch((err) => console.log("error in hashPassword function: ", err));
@@ -67,7 +67,7 @@ module.exports.authenticate = (email, password) => {
     return findUser(email)
         .then((result) => {
             if (!result.rows[0]) {
-                console.log("kein user gefunden");
+                // console.log("kein user gefunden");
                 return [];
             } else {
                 let userid = result.rows[0].id;

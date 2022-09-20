@@ -27,7 +27,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        console.log("Component Mounted");
+        // console.log("Component Mounted");
         fetch("/api/userData")
             .then((response) => response.json())
             .then((data) => {

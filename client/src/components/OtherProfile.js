@@ -12,7 +12,7 @@ export default function OtherProfile() {
     fetch(`/api/userData/${userId}`)
         .then((response) => response.json())
         .then((data) => {
-            console.log("data.sameUser: ", data.sameUser);
+            // console.log("data.sameUser: ", data.sameUser);
             // if (data.sameUser) {
             //     location.href("/");
             // }
