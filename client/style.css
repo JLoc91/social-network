@@ -299,6 +299,13 @@ div.chatMessage p {
     background-color: white;
 }
 
+
+
+p,
+.messagePic {
+    padding-left: 4px;
+}
+
 textarea {
     width: 40vw;
     height: 10vh;
@@ -341,6 +348,7 @@ button,
 .onlineUserBox div {
     border-radius: 10px;
     color: white;
+    padding-left: 5px;
 }
 
 #popUp h2 {

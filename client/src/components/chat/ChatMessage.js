@@ -14,7 +14,8 @@ export default function ChatMessage({ chatMessage }) {
                 <div className="text">
                     <p key={chatMessage.id}>
                         {chatMessage.first} {chatMessage.last}{" "}
-                        {chatMessage.timestamp}
+                        {chatMessage.timestamp.slice(0, 10)}{" "}
+                        {chatMessage.timestamp.slice(11, 16)}
                     </p>
 
                     <p>{chatMessage.message}</p>
