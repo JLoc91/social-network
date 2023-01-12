@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-//part 10
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
     allowRequest: (req, callback) =>
@@ -30,7 +29,7 @@ const cookieSessionMiddleware = cookieSession({
 });
 
 app.use(cookieSessionMiddleware);
-//part10
+
 io.use(function (socket, next) {
     cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
@@ -47,8 +46,6 @@ app.use(compression());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.get("/api/user/id.json", function (req, res) {
-    console.log("req.session.userid in user/id.json: ", req.session.userid);
-
     res.json({
         userid: req.session.userid,
     });
