@@ -4,6 +4,8 @@ CREATE TABLE social_users (
      last VARCHAR NOT NULL CHECK (last != ''),
      email VARCHAR NOT NULL CHECK (email != '') unique,
      password VARCHAR NOT NULL CHECK (password != ''),
+     image VARCHAR,
+     bio VARCHAR,
      timestamp timestamp default current_timestamp
 );
 
@@ -30,9 +32,11 @@ CREATE TABLE social_chat_messages(
   );
 
 
-ALTER TABLE users
-ADD online BOOLEAN NOT NULL 
-DEFAULT False;
+ALTER TABLE social_users
+ADD image VARCHAR;
+
+ALTER TABLE social_users
+ADD bio VARCHAR;
 
   ALTER TABLE users
   DROP COLUMN online;

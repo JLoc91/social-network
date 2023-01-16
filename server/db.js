@@ -149,14 +149,14 @@ module.exports.findPeople = (input) => {
 
 module.exports.getImage = (id) => {
     const query = `
-    select url from ${tableUser} where id=$1
+    select image from ${tableUser} where id=$1
     `;
     return db.query(query, [id]);
 };
 
 module.exports.insertImage = (url, id) => {
     return db.query(
-        `update ${tableUser} set url='${url}'
+        `update ${tableUser} set image='${url}'
         WHERE id=${id} returning *`
     );
 };
@@ -201,7 +201,7 @@ module.exports.deleteFriendship = (user1, user2) => {
 
 module.exports.getFriendsAndWannabes = (user) => {
     const query = `
-    SELECT ${tableUser}.id, first, last, accepted, url FROM ${tableUser}
+    SELECT ${tableUser}.id, first, last, accepted, image FROM ${tableUser}
     JOIN ${tableFriendships}
     ON (accepted = true AND recipient_id = $1 AND ${tableUser}.id = ${tableFriendships}.sender_id)
     OR (accepted = true AND sender_id = $1 AND ${tableUser}.id = ${tableFriendships}.recipient_id)
@@ -212,7 +212,7 @@ module.exports.getFriendsAndWannabes = (user) => {
 
 module.exports.getChatMessages = () => {
     const query = `
-    SELECT ${tableChatMessages}.id, ${tableChatMessages}.user_id, message, ${tableChatMessages}.timestamp, ${tableUser}.first, ${tableUser}.last, ${tableUser}.url FROM ${tableChatMessages}
+    SELECT ${tableChatMessages}.id, ${tableChatMessages}.user_id, message, ${tableChatMessages}.timestamp, ${tableUser}.first, ${tableUser}.last, ${tableUser}.image FROM ${tableChatMessages}
     JOIN ${tableUser}
     ON (${tableChatMessages}.user_id = ${tableUser}.id)
     `;
@@ -228,14 +228,14 @@ module.exports.insertChatMessage = (userId, message) => {
 
 module.exports.getUserInfo = (userId) => {
     const query = `
-    select first, last, url from ${tableUser} where id=$1
+    select first, last, image from ${tableUser} where id=$1
     `;
     return db.query(query, [userId]);
 };
 
 module.exports.getOnlineUser = () => {
     const query = `
-    select id, first, last, url from ${tableUser} where online=true
+    select id, first, last, image from ${tableUser} where online=true
     `;
     return db.query(query);
 };
@@ -256,7 +256,7 @@ module.exports.setUserOffline = (id) => {
 
 module.exports.getOnlineUserInfo = (onlineUserArray) => {
     const query = `
-    SELECT id, first, last, url
+    SELECT id, first, last, image
     FROM users WHERE id = ANY($1)
     `;
     const params = [onlineUserArray];
@@ -266,7 +266,7 @@ module.exports.getOnlineUserInfo = (onlineUserArray) => {
 module.exports.deleteUser = (id) => {
     const query = `
     DELETE FROM ${tableUser} WHERE id=$1
-    returning url`;
+    returning image`;
     return db.query(query, [id]);
 };
 
