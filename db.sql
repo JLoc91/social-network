@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE social_users (
      id SERIAL PRIMARY KEY,
      first VARCHAR NOT NULL CHECK (first != ''),
      last VARCHAR NOT NULL CHECK (last != ''),
@@ -7,14 +7,14 @@ CREATE TABLE users (
      timestamp timestamp default current_timestamp
 );
 
-CREATE TABLE reset_codes(
+CREATE TABLE social_reset_codes(
     id SERIAL PRIMARY KEY,
     email VARCHAR NOT NULL,
     code VARCHAR NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
 
-CREATE TABLE friendships(
+CREATE TABLE social_friendships(
     id SERIAL PRIMARY KEY,
     sender_id INTEGER NOT NULL references users(id),
     recipient_id INTEGER NOT NULL references users(id),
@@ -22,7 +22,7 @@ CREATE TABLE friendships(
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
 
-CREATE TABLE chat_messages(
+CREATE TABLE social_chat_messages(
     id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL references users(id),
     message VARCHAR NOT NULL,

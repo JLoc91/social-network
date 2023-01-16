@@ -1,8 +1,8 @@
 const spicedPg = require("spiced-pg");
-const tableUser = "users";
-const tableCode = "reset_codes";
-const tableFriendships = "friendships";
-const tableChatMessages = "chat_messages";
+const tableUser = "social_users";
+const tableCode = "social_reset_codes";
+const tableFriendships = "social_friendships";
+const tableChatMessages = "social_chat_messages";
 const bcrypt = require("bcryptjs");
 // const { profile } = require("console");
 let dbURL;
@@ -101,7 +101,7 @@ function comparePassword(password, dbPassword) {
 }
 
 module.exports.checkEmail = (email) => {
-    return db.query(`select * from users where email='${email}'`);
+    return db.query(`select * from social_users where email='${email}'`);
 };
 
 module.exports.insertCode = (email, code) => {
