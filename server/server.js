@@ -1,10 +1,25 @@
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
-const io = require("socket.io")(server, {
-    allowRequest: (req, callback) =>
-        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+
+//socket.io code adapted for deployment environment
+const io = require("socket.io")(server, {    
+    cors: {
+        // array of origins
+        origin: [
+            "https://antigram.onrender.com",
+            "http://localhost:3000",
+        ],
+        credentials: true,
+    },
 });
+
+// //previous socket.io code
+// const io = require("socket.io")(server, {
+//     allowRequest: (req, callback) =>
+//         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+// });
+
 const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");

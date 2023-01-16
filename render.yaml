@@ -1,0 +1,11 @@
+services:
+    - type: web
+      name: antigram-social-network
+      env: node
+      plan: free
+      startCommand: node server/server.js
+      buildCommand: npm install && webpack --mode production
+
+databases:
+    - name: projects-database
+      plan: free
