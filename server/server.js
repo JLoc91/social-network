@@ -330,10 +330,15 @@ app.post("/api/image", uploader.single("photo"), s3.upload, (req, res) => {
     //respond to the client - success/failure
 
     //req.file is created by MUlter if the upload worked!
-    req.body.awsurl = path.join(
-        "https://s3.amazonaws.com/spicedling/",
-        req.file.filename
-    );
+    req.body.awsurl = 
+        `https://s3.amazonaws.com/spicedling/${req.file.filename}`
+        
+    ;
+    // old version from SPICED which 'loses' a /
+    // req.body.awsurl = path.join(
+    //     "https://s3.amazonaws.com/spicedling/",
+    //     req.file.filename
+    // );
     if (req.file) {
         // console.log("req.file: ", req.file);
         db.getImage(req.session.userid).then((resultImage) => {
