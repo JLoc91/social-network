@@ -95,7 +95,7 @@ export default function FindPeople() {
                                 <img
                                     src={
                                         item.url ||
-                                        "https:/s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
+                                        "https://s3.amazonaws.com/spicedling/-E2SRd1Y-R4G67_JbXqfpMtcmerzTutu.png"
                                     }
                                     alt={item.first}
                                     className="findPeople shadow"

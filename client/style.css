@@ -88,6 +88,7 @@ img {
     height: 14vw;
     max-height: 9rem;
     min-height: 4rem;
+    background-color: white;
 }
 
 .profileHeader .profilePicContainer img {
